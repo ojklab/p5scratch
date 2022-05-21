@@ -1,11 +1,5 @@
 class Sprite {
-  constructor(
-    _size = 50,
-    _x = width / 2,
-    _y = height / 2,
-    _col = "red",
-    _bg = "white"
-  ) {
+  constructor(_x = width / 2, _y = height / 2) {
     this.x = _x;
     this.y = _y;
     this.size = _size;
@@ -28,9 +22,32 @@ class Sprite {
     this.y += this.dir.y * steps;
     this.draw();
   }
+
+  rotate(dir) {
+    switch (dir) {
+      case 'N':
+        this.dir.x = 0;
+        this.dir.y = -1;
+        break;
+      case 'S':
+        this.dir.x = 0;
+        this.dir.y = 1;
+        break;
+      case 'E':
+        this.dir.x = 1;
+        this.dir.y = 0;
+        break;
+      case 'W':
+        this.dir.x = -1;
+        this.dir.y = 0;
+        break;
+      default:
+        print('方向はN/S/E/Wで指定してください');
+    }
+  }
 }
 
-p5.prototype.startScratch = function (bg = "white") {
+p5.prototype.startScratch = function (bg = 'white') {
   createCanvas(400, 400);
   background(bg);
   frameRate(30);

@@ -1,2 +1,2 @@
 # p5scratch
-Scratchn
+Scratchの基本的な振る舞いに似せたスプライトを動かせるライブラリ

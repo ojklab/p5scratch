@@ -83,6 +83,8 @@ class Sprite {
     }
     text(msg, this.x, this.y - 40);
     await sleep(sec);
+    fill(255);
+    rect(this.x, this.y - 40, 100, 25);
   }
 
   setColor(col = 'coral') {

@@ -1,13 +1,11 @@
 p5.prototype.sleep = (sec) => {
-  return new Promise(function (resolve) {
-    setTimeout(function () {
-      resolve();
-    }, sec * 1000);
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), sec * 1000);
   });
 };
 
 class Sprite {
-  constructor(x = width / 2, y = height / 2) {
+  constructor(x = 0, y = 0) {
     this.x = x;
     this.y = y;
     this.dir = { x: 1, y: 0 };
@@ -36,11 +34,6 @@ class Sprite {
   erasePrev() {
     fill(255);
     circle(this.x, this.y, 51);
-    /*
-    erase();
-    circle(this.x, this.y, 51);
-    noErase();
-    */
   }
 
   walk(steps = 10) {
@@ -114,6 +107,7 @@ class Sprite {
 
 p5.prototype.startScratch = (margin = false) => {
   createCanvas(400, 400);
+  translate(width / 2, height / 2);
 
   document.querySelector('canvas').style.border = 'solid 1px gray';
   if (margin) {

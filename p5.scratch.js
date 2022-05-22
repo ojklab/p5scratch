@@ -1,23 +1,50 @@
+p5.prototype.sleep = (sec) => {
+  return new Promise(function (resolve) {
+    setTimeout(function () {
+      resolve();
+    }, sec * 1000);
+  });
+};
+
 class Sprite {
-  constructor(_x = width / 2, _y = height / 2) {
-    this.x = _x;
-    this.y = _y;
-    this.size = _size;
+  constructor(x = width / 2, y = height / 2) {
+    this.x = x;
+    this.y = y;
     this.dir = { x: 1, y: 0 };
-    this.col = _col;
-    this.bg = _bg;
-    this.draw();
+    this.col = 'coral';
+    this.s = true;
   }
 
   draw() {
-    noStroke();
     fill(this.col);
-    circle(this.x, this.y, this.size);
+    if (this.s) {
+      circle(this.x, this.y, 50);
+    } else {
+      ellipse(this.x, this.y, 50, 45);
+    }
+    fill(0);
+    if (this.dir.x) {
+      circle(this.x, this.y - 3, 5);
+      circle(this.x + 15 * this.dir.x, this.y - 3, 5);
+    } else {
+      circle(this.x - 8, this.y + 10 * this.dir.y, 5);
+      circle(this.x + 8, this.y + 10 * this.dir.y, 5);
+    }
+    this.s = !this.s;
+  }
+
+  erasePrev() {
+    fill(255);
+    circle(this.x, this.y, 51);
+    /*
+    erase();
+    circle(this.x, this.y, 51);
+    noErase();
+    */
   }
 
   walk(steps = 10) {
-    fill(this.bg);
-    circle(this.x, this.y, this.size);
+    this.erasePrev();
     this.x += this.dir.x * steps;
     this.y += this.dir.y * steps;
     this.draw();
@@ -42,14 +69,59 @@ class Sprite {
         this.dir.y = 0;
         break;
       default:
-        print('方向はN/S/E/Wで指定してください');
+        console.error('方向はN/S/E/Wで指定してください');
+        noLoop();
+        break;
     }
+    this.draw();
+  }
+
+  async say(msg, sec = 2) {
+    if (msg.length > 10) {
+      console.log('10文字までしか話せません');
+      return;
+    }
+    text(msg, this.x, this.y - 40);
+    await sleep(sec);
+  }
+
+  setColor(col = 'coral') {
+    this.col = col;
+    this.draw();
+  }
+
+  setPosition(x, y) {
+    this.erasePrev();
+    this.x = x;
+    this.y = y;
+    this.draw();
+  }
+
+  setX(x) {
+    this.erasePrev();
+    this.x = x;
+    this.draw();
+  }
+
+  setY(y) {
+    this.erasePrev();
+    this.y = y;
+    this.draw();
   }
 }
 
-p5.prototype.startScratch = function (bg = 'white') {
+p5.prototype.startScratch = (margin = false) => {
   createCanvas(400, 400);
-  background(bg);
+
+  document.querySelector('canvas').style.border = 'solid 1px gray';
+  if (margin) {
+    document.querySelector('canvas').style.margin = '50px';
+  }
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+  background(255);
+  noStroke();
   frameRate(30);
-  return new Sprite();
+  rectMode(CENTER);
+  textAlign(CENTER, CENTER);
 };

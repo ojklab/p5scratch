@@ -105,7 +105,7 @@ class Sprite {
   }
 }
 
-p5.prototype.startScratch = (margin = false) => {
+p5.prototype.start = (margin = false) => {
   createCanvas(400, 400);
   translate(width / 2, height / 2);
 

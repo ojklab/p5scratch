@@ -1,5 +1,5 @@
 async function setup() {
-  startScratch();
+  start();
 
   const maru1 = new Sprite(-200, 0);
   const maru2 = new Sprite(200, 0);

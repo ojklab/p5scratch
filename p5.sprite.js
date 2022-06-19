@@ -1,3 +1,6 @@
+'use strict';
+/*jshint esversion: 8 */
+
 let ojkSprite;
 
 p5.prototype.start = (margin = false) => {
@@ -16,6 +19,8 @@ p5.prototype.start = (margin = false) => {
 
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
+
+  noLoop();
 
   ojkSprite = new Sprite();
 };

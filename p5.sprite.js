@@ -1,4 +1,3 @@
-'use strict';
 /*jshint esversion: 8 */
 
 let ojkSprite;

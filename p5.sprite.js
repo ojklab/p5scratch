@@ -31,6 +31,7 @@ class Sprite {
     this.dir = { x: 1, y: 0 };
     this.col = 'coral';
     this.state = true;
+    this.draw();
   }
 
   draw() {

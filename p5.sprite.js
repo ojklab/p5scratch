@@ -1,7 +1,23 @@
-p5.prototype.sleep = (sec) => {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(), sec * 1000);
-  });
+let ojkSprite;
+
+p5.prototype.start = (margin = false) => {
+  createCanvas(400, 400);
+  translate(width / 2, height / 2);
+
+  document.querySelector('canvas').style.border = 'solid 1px gray';
+  if (margin) {
+    document.querySelector('canvas').style.margin = '50px';
+  }
+  document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+  background(255);
+  noStroke();
+  frameRate(30);
+
+  rectMode(CENTER);
+  textAlign(CENTER, CENTER);
+
+  ojkSprite = new Sprite();
 };
 
 class Sprite {
@@ -10,12 +26,13 @@ class Sprite {
     this.y = y;
     this.dir = { x: 1, y: 0 };
     this.col = 'coral';
-    this.s = true;
+    this.state = true;
   }
 
   draw() {
+    background(255);
     fill(this.col);
-    if (this.s) {
+    if (this.state) {
       circle(this.x, this.y, 50);
     } else {
       ellipse(this.x, this.y, 50, 45);
@@ -28,22 +45,16 @@ class Sprite {
       circle(this.x - 8, this.y + 10 * this.dir.y, 5);
       circle(this.x + 8, this.y + 10 * this.dir.y, 5);
     }
-    this.s = !this.s;
+    this.state = !this.state;
   }
 
-  erasePrev() {
-    fill(255);
-    circle(this.x, this.y, 51);
-  }
-
-  walk(steps = 10) {
-    this.erasePrev();
+  move(steps = 10) {
     this.x += this.dir.x * steps;
     this.y += this.dir.y * steps;
     this.draw();
   }
 
-  rotate(dir) {
+  turn(dir) {
     switch (dir) {
       case 'N':
         this.dir.x = 0;
@@ -69,23 +80,20 @@ class Sprite {
     this.draw();
   }
 
-  async say(msg, sec = 2) {
+  async say(msg) {
     if (msg.length > 10) {
       console.log('10文字までしか話せません');
       return;
     }
     text(msg, this.x, this.y - 40);
-    await sleep(sec);
-    fill(255);
-    rect(this.x, this.y - 40, 100, 25);
   }
 
-  setColor(col = 'coral') {
+  changeColor(col = 'coral') {
     this.col = col;
     this.draw();
   }
 
-  setPosition(x, y) {
+  goTo(x, y) {
     this.erasePrev();
     this.x = x;
     this.y = y;
@@ -105,19 +113,38 @@ class Sprite {
   }
 }
 
-p5.prototype.start = (margin = false) => {
-  createCanvas(400, 400);
-  translate(width / 2, height / 2);
+/* メソッドを直接呼び出せるように */
 
-  document.querySelector('canvas').style.border = 'solid 1px gray';
-  if (margin) {
-    document.querySelector('canvas').style.margin = '50px';
-  }
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
+p5.prototype.sleep = (sec) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), sec * 1000);
+  });
+};
 
-  background(255);
-  noStroke();
-  frameRate(30);
-  rectMode(CENTER);
-  textAlign(CENTER, CENTER);
+p5.prototype.move = (steps) => {
+  ojkSprite.move(steps);
+};
+
+p5.prototype.say = (msg) => {
+  ojkSprite.say(msg);
+};
+
+p5.prototype.turn = (dir) => {
+  ojkSprite.turn(dir);
+};
+
+p5.prototype.goTo = (x, y) => {
+  ojkSprite.goTo(x, y);
+};
+
+p5.prototype.setX = (x) => {
+  ojkSprite.setX(x);
+};
+
+p5.prototype.setY = (y) => {
+  ojkSprite.setY(y);
+};
+
+p5.prototype.changeColor = (col) => {
+  ojkSprite.changeColor(col);
 };

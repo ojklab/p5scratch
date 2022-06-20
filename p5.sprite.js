@@ -52,7 +52,7 @@ class Sprite {
     this.state = !this.state;
   }
 
-  move(steps = 10) {
+  walk(steps = 10) {
     this.x += this.dir.x * steps;
     this.y += this.dir.y * steps;
     this.draw();
@@ -124,8 +124,8 @@ p5.prototype.sleep = (sec) => {
   });
 };
 
-p5.prototype.move = (steps) => {
-  ojkSprite.move(steps);
+p5.prototype.walk = (steps) => {
+  ojkSprite.walk(steps);
 };
 
 p5.prototype.say = (msg) => {

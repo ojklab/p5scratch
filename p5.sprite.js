@@ -4,7 +4,7 @@ let ojkSprite;
 
 p5.prototype.start = (margin = false) => {
   createCanvas(400, 400);
-  translate(width / 2, height / 2);
+  // translate(width / 2, height / 2);
 
   document.querySelector('canvas').style.border = 'solid 1px gray';
   if (margin) {

@@ -128,6 +128,10 @@ p5.prototype.walk = (steps) => {
   ojkSprite.walk(steps);
 };
 
+p5.prototype.move = (steps) => {
+  ojkSprite.walk(steps);
+};
+
 p5.prototype.say = (msg) => {
   ojkSprite.say(msg);
 };

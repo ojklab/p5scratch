@@ -156,6 +156,10 @@ p5.prototype.goTo = (x, y) => {
   ojkSprite.goTo(x, y);
 };
 
+p5.prototype.setColor = (col) => {
+  ojkSprite.setColor(col);
+};
+
 p5.prototype.setX = (x) => {
   ojkSprite.setX(x);
 };
@@ -164,6 +168,10 @@ p5.prototype.setY = (y) => {
   ojkSprite.setY(y);
 };
 
-p5.prototype.setColor = (col) => {
-  ojkSprite.setColor(col);
+p5.prototype.getX = (x) => {
+  ojkSprite.getX(x);
+};
+
+p5.prototype.getY = (y) => {
+  ojkSprite.getY(y);
 };

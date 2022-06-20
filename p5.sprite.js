@@ -168,10 +168,14 @@ p5.prototype.setY = (y) => {
   ojkSprite.setY(y);
 };
 
-p5.prototype.getX = (x) => {
-  ojkSprite.getX(x);
+p5.prototype.getX = () => {
+  return ojkSprite.getX();
 };
 
-p5.prototype.getY = (y) => {
-  ojkSprite.getY(y);
+p5.prototype.getY = () => {
+  return ojkSprite.getY();
+};
+
+p5.prototype.getPos = () => {
+  return ojkSprite.getPos();
 };

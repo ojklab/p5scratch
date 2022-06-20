@@ -18,8 +18,6 @@ p5.prototype.start = (margin = false) => {
 
   textAlign(CENTER, CENTER);
 
-  noLoop();
-
   ojkSprite = new Sprite(width / 4, height / 2);
 };
 
@@ -82,6 +80,7 @@ class Sprite {
         break;
       default:
         console.error('方向はN/S/E/Wもしくは上/下/左/右で指定してください');
+        noLoop();
         break;
     }
     this.draw();

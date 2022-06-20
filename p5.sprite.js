@@ -33,12 +33,14 @@ class Sprite {
 
   draw() {
     background(255);
+
     fill(this.col);
     if (this.state) {
       circle(this.x, this.y, 50);
     } else {
       ellipse(this.x, this.y, 50, 45);
     }
+
     fill(0);
     if (this.dir.x) {
       circle(this.x, this.y - 3, 5);
@@ -47,6 +49,7 @@ class Sprite {
       circle(this.x - 8, this.y + 10 * this.dir.y, 5);
       circle(this.x + 8, this.y + 10 * this.dir.y, 5);
     }
+
     this.state = !this.state;
   }
 
@@ -83,6 +86,7 @@ class Sprite {
         noLoop();
         break;
     }
+
     this.draw();
   }
 
@@ -96,22 +100,31 @@ class Sprite {
   }
 
   goTo(x, y) {
-    this.erasePrev();
     this.x = x;
     this.y = y;
     this.draw();
   }
 
   setX(x) {
-    this.erasePrev();
     this.x = x;
     this.draw();
   }
 
   setY(y) {
-    this.erasePrev();
     this.y = y;
     this.draw();
+  }
+
+  getX() {
+    return this.x;
+  }
+
+  getY() {
+    return this.y;
+  }
+
+  getPos() {
+    return [this.x, this.y];
   }
 }
 

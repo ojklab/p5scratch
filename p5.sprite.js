@@ -33,7 +33,7 @@ class Sprite {
 
   draw() {
     background(255);
-
+    noStroke();
     fill(this.col);
     if (this.state) {
       circle(this.x, this.y, 50);

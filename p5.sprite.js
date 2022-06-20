@@ -153,3 +153,15 @@ p5.prototype.setY = (y) => {
 p5.prototype.changeColor = (col) => {
   ojkSprite.changeColor(col);
 };
+
+/* メソッドを日本語でも呼び出せるように */
+
+p5.prototype['待つ'] = (sec) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), sec * 1000);
+  });
+};
+
+p5.prototype['◯歩進む'] = (steps) => {
+  ojkSprite.move(steps);
+};

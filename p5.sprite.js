@@ -162,6 +162,6 @@ p5.prototype['待つ'] = (sec) => {
   });
 };
 
-p5.prototype['◯歩進む'] = (steps) => {
+p5.prototype['進む'] = (steps) => {
   ojkSprite.move(steps);
 };

@@ -62,38 +62,37 @@ class Sprite {
   turn(dir) {
     switch (dir) {
       case 'N':
+      case '上':
         this.dir.x = 0;
         this.dir.y = -1;
         break;
       case 'S':
+      case '下':
         this.dir.x = 0;
         this.dir.y = 1;
         break;
       case 'E':
+      case '右':
         this.dir.x = 1;
         this.dir.y = 0;
         break;
       case 'W':
+      case '左':
         this.dir.x = -1;
         this.dir.y = 0;
         break;
       default:
-        console.error('方向はN/S/E/Wで指定してください');
-        noLoop();
+        console.error('方向はN/S/E/Wもしくは上/下/左/右で指定してください');
         break;
     }
     this.draw();
   }
 
-  async say(msg) {
-    if (msg.length > 10) {
-      console.log('10文字までしか話せません');
-      return;
-    }
+  say(msg) {
     text(msg, this.x, this.y - 40);
   }
 
-  changeColor(col = 'coral') {
+  setColor(col = 'coral') {
     this.col = col;
     this.draw();
   }
@@ -150,6 +149,6 @@ p5.prototype.setY = (y) => {
   ojkSprite.setY(y);
 };
 
-p5.prototype.changeColor = (col) => {
-  ojkSprite.changeColor(col);
+p5.prototype.setColor = (col) => {
+  ojkSprite.setColor(col);
 };

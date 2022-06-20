@@ -20,7 +20,7 @@ p5.prototype.start = (margin = false) => {
 
   noLoop();
 
-  ojkSprite = new Sprite();
+  ojkSprite = new Sprite(width / 4, height / 2);
 };
 
 class Sprite {

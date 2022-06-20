@@ -16,7 +16,6 @@ p5.prototype.start = (margin = false) => {
   noStroke();
   frameRate(30);
 
-  rectMode(CENTER);
   textAlign(CENTER, CENTER);
 
   noLoop();

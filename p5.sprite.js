@@ -3,21 +3,23 @@
 let ojkSprite;
 
 p5.prototype.start = (margin = false) => {
+  // キャンバスの設定
   createCanvas(400, 400);
-  // translate(width / 2, height / 2);
-
   document.querySelector('canvas').style.border = 'solid 1px gray';
   if (margin) {
     document.querySelector('canvas').style.margin = '50px';
   }
   document.addEventListener('contextmenu', (e) => e.preventDefault());
 
+  // 描画の装飾
   background(255);
   noStroke();
-  frameRate(30);
 
+  // その他の設定
+  frameRate(30);
   textAlign(CENTER, CENTER);
 
+  // スプライトの生成
   ojkSprite = new Sprite(width / 4, height / 2);
 };
 
@@ -91,7 +93,7 @@ class Sprite {
   }
 
   say(msg) {
-    text(msg, this.x, this.y - 40);
+    text(msg, this.x + 10, this.y - 40);
   }
 
   setColor(col = 'coral') {

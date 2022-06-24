@@ -2,7 +2,7 @@
 
 let ojkSprite;
 
-p5.prototype.start = (margin = false) => {
+p5.prototype.start = (x = 100, y = 200, margin = false) => {
   // キャンバスの設定
   createCanvas(400, 400);
   document.querySelector('canvas').style.border = 'solid 1px gray';
@@ -20,11 +20,11 @@ p5.prototype.start = (margin = false) => {
   textAlign(CENTER, CENTER);
 
   // スプライトの生成
-  ojkSprite = new Sprite(width / 4, height / 2);
+  ojkSprite = new Sprite(x, y);
 };
 
 class Sprite {
-  constructor(x = 0, y = 0) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
     this.dir = { x: 1, y: 0 };
@@ -190,8 +190,8 @@ p5.prototype.setY = (y) => {
   ojkSprite.setY(y);
 };
 
-p5.prototype.moveToY = (x) => {
-  ojkSprite.setX(x);
+p5.prototype.moveToY = (y) => {
+  ojkSprite.setY(y);
 };
 
 p5.prototype.getX = () => {

@@ -103,9 +103,9 @@ class Sprite {
 
   setDir(next, prev) {
     if (this.dir.x) {
-      this.dir.x = next > prev ? 1 : -1;
+      this.dir.x = next >= prev ? 1 : -1;
     } else {
-      this.dir.y = next > prev ? 1 : -1;
+      this.dir.y = next >= prev ? 1 : -1;
     }
   }
 

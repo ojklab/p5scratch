@@ -101,18 +101,34 @@ class Sprite {
     this.draw();
   }
 
-  goTo(x, y) {
+  setDir(next, prev) {
+    if (this.dir.x) {
+      this.dir.x = next > prev ? 1 : -1;
+    } else {
+      this.dir.y = next > prev ? 1 : -1;
+    }
+  }
+
+  setXY(x, y) {
+    if (this.dir.x) {
+      this.setDir(x, this.x);
+    }
     this.x = x;
+    if (this.dir.y) {
+      this.setDir(y, this.y);
+    }
     this.y = y;
     this.draw();
   }
 
   setX(x) {
+    this.setDir(x, this.x);
     this.x = x;
     this.draw();
   }
 
   setY(y) {
+    this.setDir(y, this.y);
     this.y = y;
     this.draw();
   }
@@ -125,7 +141,7 @@ class Sprite {
     return this.y;
   }
 
-  getPos() {
+  getXY() {
     return [this.x, this.y];
   }
 }

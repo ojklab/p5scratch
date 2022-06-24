@@ -158,10 +158,6 @@ p5.prototype.walk = (steps) => {
   ojkSprite.walk(steps);
 };
 
-p5.prototype.move = (steps) => {
-  ojkSprite.walk(steps);
-};
-
 p5.prototype.say = (msg) => {
   ojkSprite.say(msg);
 };
@@ -170,20 +166,32 @@ p5.prototype.turn = (dir) => {
   ojkSprite.turn(dir);
 };
 
-p5.prototype.goTo = (x, y) => {
-  ojkSprite.goTo(x, y);
-};
-
 p5.prototype.setColor = (col) => {
   ojkSprite.setColor(col);
+};
+
+p5.prototype.setXY = (x, y) => {
+  ojkSprite.setXY(x, y);
+};
+
+p5.prototype.moveToXY = (x, y) => {
+  ojkSprite.setXY(x, y);
 };
 
 p5.prototype.setX = (x) => {
   ojkSprite.setX(x);
 };
 
+p5.prototype.moveToX = (x) => {
+  ojkSprite.setX(x);
+};
+
 p5.prototype.setY = (y) => {
   ojkSprite.setY(y);
+};
+
+p5.prototype.moveToY = (x) => {
+  ojkSprite.setX(x);
 };
 
 p5.prototype.getX = () => {

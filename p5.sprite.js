@@ -93,7 +93,7 @@ class Sprite {
   }
 
   say(msg) {
-    text(msg, this.x + 10, this.y - 40);
+    text(msg, this.x, this.y - 40);
   }
 
   setColor(col = 'coral') {

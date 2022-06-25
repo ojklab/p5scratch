@@ -93,6 +93,7 @@ class Sprite {
   }
 
   say(msg) {
+    this.draw();
     text(msg, this.x, this.y - 40);
   }
 

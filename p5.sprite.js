@@ -112,6 +112,7 @@ class Sprite {
   }
 
   setXY(x, y) {
+    const keepState = this.x == x && this.y == y;
     if (this.dir.x) {
       this.setDir(x, this.x);
     }
@@ -120,19 +121,21 @@ class Sprite {
       this.setDir(y, this.y);
     }
     this.y = y;
-    this.draw();
+    this.draw(keepState);
   }
 
   setX(x) {
+    const keepState = this.x == x;
     this.setDir(x, this.x);
     this.x = x;
-    this.draw();
+    this.draw(keepState);
   }
 
   setY(y) {
+    const keepState = this.y == y;
     this.setDir(y, this.y);
     this.y = y;
-    this.draw();
+    this.draw(keepState);
   }
 
   getX() {

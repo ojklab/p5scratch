@@ -5,28 +5,15 @@ async function setup() {
   start();
   await sleep(1);
 
-  say('100 + 100 は…');
-  await sleep(2);
-  say(100 + 100);
-  await sleep(1);
+  let x = 100; // 最初の場所
 
-  walk(10);
-  await sleep(0.5);
-  walk(10);
-  await sleep(0.5);
-  walk(10);
-  await sleep(0.5);
-  walk(10);
-  await sleep(0.5);
-  walk(10);
-  await sleep(0.5);
+  while (x < 200) {
+    moveToX(x);
+    await sleep(0.5);
 
-  say('Say');
-  await sleep(1);
-  say('Yes!');
-  await sleep(1);
-
-  walk(10);
+    x += 10; // x座標の更新
+  }
+  say('真ん中に到着〜');
 }
 
 function keyPressed() {

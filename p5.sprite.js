@@ -29,14 +29,17 @@ class Sprite {
     this.y = y;
     this.dir = { x: 1, y: 0 };
     this.col = 'coral';
-    this.state = true;
+    this.state = false;
     this.draw();
   }
 
-  draw() {
+  draw(keepState = false) {
     background(255);
     noStroke();
     fill(this.col);
+
+    this.state = keepState ? this.state : !this.state;
+
     if (this.state) {
       circle(this.x, this.y, 50);
     } else {
@@ -51,8 +54,6 @@ class Sprite {
       circle(this.x - 8, this.y + 10 * this.dir.y, 5);
       circle(this.x + 8, this.y + 10 * this.dir.y, 5);
     }
-
-    this.state = !this.state;
   }
 
   walk(steps = 10) {
@@ -93,7 +94,7 @@ class Sprite {
   }
 
   say(msg) {
-    this.draw();
+    this.draw(true);
     text(msg, this.x, this.y - 40);
   }
 

@@ -3,20 +3,30 @@
 
 async function setup() {
   start();
+  await sleep(1);
 
-  for (let i = 0; i < 10; i += 1) {
-    walk(10);
-    await sleep(0.5);
-  }
-
-  say('こんにちは！');
+  say('100 + 100 は…');
   await sleep(2);
-  turn('N');
+  say(100 + 100);
+  await sleep(1);
 
-  for (let i = 0; i < 10; i += 1) {
-    walk(10);
-    await sleep(0.5);
-  }
+  walk(10);
+  await sleep(0.5);
+  walk(10);
+  await sleep(0.5);
+  walk(10);
+  await sleep(0.5);
+  walk(10);
+  await sleep(0.5);
+  walk(10);
+  await sleep(0.5);
+
+  say('Say');
+  await sleep(1);
+  say('Yes!');
+  await sleep(1);
+
+  walk(10);
 }
 
 function keyPressed() {

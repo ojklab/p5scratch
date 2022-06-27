@@ -100,7 +100,7 @@ class Sprite {
 
   setColor(col = 'coral') {
     this.col = col;
-    this.draw();
+    this.draw(true);
   }
 
   setDir(next, prev) {

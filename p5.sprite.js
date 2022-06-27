@@ -90,7 +90,16 @@ class Sprite {
         break;
     }
 
-    this.draw();
+    this.draw(true);
+  }
+
+  turnBack() {
+    if (this.dir.x) {
+      this.dir.x *= -1;
+    } else {
+      this.dir.y *= -1;
+    }
+    this.draw(true);
   }
 
   say(msg) {

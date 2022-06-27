@@ -103,6 +103,10 @@ class Sprite {
     this.draw(true);
   }
 
+  getColor() {
+    return this.col;
+  }
+
   setDir(next, prev) {
     if (this.dir.x) {
       this.dir.x = next >= prev ? 1 : -1;
@@ -173,6 +177,10 @@ p5.prototype.turn = (dir) => {
 
 p5.prototype.setColor = (col) => {
   ojkSprite.setColor(col);
+};
+
+p5.prototype.getColor = () => {
+  return ojkSprite.getColor();
 };
 
 p5.prototype.setXY = (x, y) => {

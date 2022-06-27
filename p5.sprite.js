@@ -184,6 +184,10 @@ p5.prototype.turn = (dir) => {
   ojkSprite.turn(dir);
 };
 
+p5.prototype.turnBack = () => {
+  ojkSprite.turnBack();
+};
+
 p5.prototype.setColor = (col) => {
   ojkSprite.setColor(col);
 };

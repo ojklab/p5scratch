@@ -1,15 +1,15 @@
 'use strict';
 
-let ojkSprite;
+let p5nyan;
 
 p5.prototype.start = (x = 100, y = 200, margin = false) => {
   // キャンバスの設定
-  createCanvas(400, 400);
+  createCanvas(480, 360);
   document.querySelector('canvas').style.border = 'solid 1px gray';
   if (margin) {
     document.querySelector('canvas').style.margin = '50px';
   }
-  document.addEventListener('contextmenu', (e) => e.preventDefault());
+  // document.addEventListener('contextmenu', (e) => e.preventDefault());
 
   // 描画の装飾
   background(255);
@@ -18,9 +18,10 @@ p5.prototype.start = (x = 100, y = 200, margin = false) => {
   // その他の設定
   frameRate(30);
   textAlign(CENTER, CENTER);
+  colorMode(HSL, 360, 100, 100);
 
   // スプライトの生成
-  ojkSprite = new Sprite(x, y);
+  p5nyan = new Sprite(x, y);
 };
 
 class Sprite {
@@ -29,6 +30,8 @@ class Sprite {
     this.y = y;
     this.dir = { x: 1, y: 0 };
     this.col = 'coral';
+    this.ncol = this.getNCol();
+    this.size = 60;
     this.state = false;
     this.draw();
   }
@@ -36,23 +39,54 @@ class Sprite {
   draw(keepState = false) {
     background(255);
     noStroke();
-    fill(this.col);
 
     this.state = keepState ? this.state : !this.state;
+    const x = this.x;
+    const y = this.y;
+    const h = this.state ? 25 : 23;
 
-    if (this.state) {
-      circle(this.x, this.y, 50);
-    } else {
-      ellipse(this.x, this.y, 50, 45);
-    }
-
-    fill(0);
     if (this.dir.x) {
-      circle(this.x, this.y - 3, 5);
-      circle(this.x + 15 * this.dir.x, this.y - 3, 5);
+      const dx = this.dir.x;
+      // ear
+      fill(this.ncol);
+      triangle(x + 8 * dx, y - h + 2, x + 24 * dx, y - h + 10, x + 20 * dx, y - h - 6);
+      // head
+      fill(this.col);
+      ellipse(x, y, 60, h * 2);
+      // eyes
+      fill(0);
+      circle(x, y - 3, 6);
+      circle(x + 20 * dx, y - 3, 6);
+      // ear
+      fill(this.ncol);
+      triangle(x, y - h + 4, x - 22 * dx, y - h + 10, x - 12 * dx, y - h - 10);
+      // nose
+      triangle(x + 10 * dx, y + 3, x + 18 * dx, y + 3, x + 14 * dx, y + 6);
+      // whiskers
+      stroke(this.ncol);
+      line(x - 14 * dx, y + 3, x - 20 * dx, y + 3);
+      line(x - 14 * dx, y, x - 20 * dx, y);
     } else {
-      circle(this.x - 8, this.y + 10 * this.dir.y, 5);
-      circle(this.x + 8, this.y + 10 * this.dir.y, 5);
+      const dy = this.dir.y;
+      // head
+      fill(this.col);
+      ellipse(x, y, 60, h * 2);
+      // eyes
+      fill(0);
+      circle(x - 12, y + 10 * dy, 6);
+      circle(x + 12, y + 10 * dy, 6);
+      // ears
+      fill(this.ncol);
+      triangle(x - 6, y - (h - 12) * dy, x - 26, y - (h - 16) * dy, x - 18, y - (h + 4) * dy);
+      triangle(x + 6, y - (h - 12) * dy, x + 26, y - (h - 16) * dy, x + 18, y - (h + 4) * dy);
+      // nose
+      triangle(x + 4, y + 15 * dy, x - 4, y + 15 * dy, x, y + 18 * dy);
+      // whiskers
+      stroke(this.ncol);
+      line(x - 22, y + 12 * dy, x - 28, y + 12 * dy);
+      line(x - 22, y + 15 * dy, x - 28, y + 15 * dy);
+      line(x + 22, y + 12 * dy, x + 28, y + 12 * dy);
+      line(x + 22, y + 15 * dy, x + 28, y + 15 * dy);
     }
   }
 
@@ -104,12 +138,18 @@ class Sprite {
 
   say(msg) {
     this.draw(true);
-    text(msg, this.x, this.y - 40);
+    fill(0);
+    noStroke();
+    text(msg, this.x, this.y - 50);
   }
 
-  setColor(col = 'coral') {
+  setColor(col = 'orange') {
     this.col = col;
     this.draw(true);
+  }
+
+  getNCol() {
+    return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.5);
   }
 
   getColor() {
@@ -173,61 +213,61 @@ p5.prototype.sleep = (sec) => {
 };
 
 p5.prototype.walk = (steps) => {
-  ojkSprite.walk(steps);
+  p5nyan.walk(steps);
 };
 
 p5.prototype.say = (msg) => {
-  ojkSprite.say(msg);
+  p5nyan.say(msg);
 };
 
 p5.prototype.turn = (dir) => {
-  ojkSprite.turn(dir);
+  p5nyan.turn(dir);
 };
 
 p5.prototype.turnBack = () => {
-  ojkSprite.turnBack();
+  p5nyan.turnBack();
 };
 
 p5.prototype.setColor = (col) => {
-  ojkSprite.setColor(col);
+  p5nyan.setColor(col);
 };
 
 p5.prototype.getColor = () => {
-  return ojkSprite.getColor();
+  return p5nyan.getColor();
 };
 
 p5.prototype.setXY = (x, y) => {
-  ojkSprite.setXY(x, y);
+  p5nyan.setXY(x, y);
 };
 
 p5.prototype.moveToXY = (x, y) => {
-  ojkSprite.setXY(x, y);
+  p5nyan.setXY(x, y);
 };
 
 p5.prototype.setX = (x) => {
-  ojkSprite.setX(x);
+  p5nyan.setX(x);
 };
 
 p5.prototype.moveToX = (x) => {
-  ojkSprite.setX(x);
+  p5nyan.setX(x);
 };
 
 p5.prototype.setY = (y) => {
-  ojkSprite.setY(y);
+  p5nyan.setY(y);
 };
 
 p5.prototype.moveToY = (y) => {
-  ojkSprite.setY(y);
+  p5nyan.setY(y);
 };
 
 p5.prototype.getX = () => {
-  return ojkSprite.getX();
+  return p5nyan.getX();
 };
 
 p5.prototype.getY = () => {
-  return ojkSprite.getY();
+  return p5nyan.getY();
 };
 
 p5.prototype.getPos = () => {
-  return ojkSprite.getPos();
+  return p5nyan.getPos();
 };

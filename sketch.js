@@ -2,17 +2,19 @@
 // noprotect
 
 async function setup() {
-  start();
+  start(240, 180);
   await sleep(1);
+  // turn('N');
+  const dir = ['上', '左', '下', '右'];
 
-  for (let i = 0; i < 10; i += 1) {
-    for (let j = 0; j < 5; j += 1) {
+  for (let i = 0; i < 40; i += 1) {
+    turn(dir[i % 4]);
+    for (let j = 0; j < 10; j += 1) {
       walk(10);
       await sleep(0.3);
     }
     say('う〜ん');
     await sleep(1);
-    turnBack();
   }
 }
 

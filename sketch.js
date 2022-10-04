@@ -3,6 +3,8 @@
 
 async function setup() {
   start(240, 180);
+  setColor('lightgreen');
+
   await sleep(1);
   // turn('N');
   const dir = ['上', '左', '下', '右'];

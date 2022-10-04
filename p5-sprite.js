@@ -73,20 +73,20 @@ class Sprite {
       ellipse(x, y, 60, h * 2);
       // eyes
       fill(0);
-      circle(x - 12, y + 10 * dy, 6);
-      circle(x + 12, y + 10 * dy, 6);
+      circle(x - 12, y + 8 * dy, 6);
+      circle(x + 12, y + 8 * dy, 6);
       // ears
       fill(this.ncol);
       triangle(x - 6, y - (h - 12) * dy, x - 26, y - (h - 16) * dy, x - 18, y - (h + 4) * dy);
       triangle(x + 6, y - (h - 12) * dy, x + 26, y - (h - 16) * dy, x + 18, y - (h + 4) * dy);
       // nose
-      triangle(x + 4, y + 15 * dy, x - 4, y + 15 * dy, x, y + 18 * dy);
+      triangle(x + 4, y + 13 * dy, x - 4, y + 13 * dy, x, y + 16 * dy);
       // whiskers
       stroke(this.ncol);
-      line(x - 22, y + 12 * dy, x - 28, y + 12 * dy);
-      line(x - 22, y + 15 * dy, x - 28, y + 15 * dy);
-      line(x + 22, y + 12 * dy, x + 28, y + 12 * dy);
-      line(x + 22, y + 15 * dy, x + 28, y + 15 * dy);
+      line(x - 22, y + 10 * dy, x - 28, y + 10 * dy);
+      line(x - 22, y + 13 * dy, x - 28, y + 13 * dy);
+      line(x + 22, y + 10 * dy, x + 28, y + 10 * dy);
+      line(x + 22, y + 13 * dy, x + 28, y + 13 * dy);
     }
   }
 
@@ -145,6 +145,7 @@ class Sprite {
 
   setColor(col = 'orange') {
     this.col = col;
+    this.ncol = this.getNCol();
     this.draw(true);
   }
 

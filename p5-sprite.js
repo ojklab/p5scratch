@@ -33,8 +33,7 @@ class Sprite {
     this.y = y;
     this.dir = { x: 1, y: 0 };
     this.col = 'coral';
-    this.ncol = this.getNCol();
-    this.size = 60;
+    this.earCol = this.getEarCol();
     this.state = false;
     this.draw();
   }
@@ -51,7 +50,7 @@ class Sprite {
     if (this.dir.x) {
       const dx = this.dir.x;
       // ear
-      fill(this.ncol);
+      fill(this.earCol);
       triangle(x + 8 * dx, y - h + 2, x + 24 * dx, y - h + 10, x + 20 * dx, y - h - 6);
       // head
       fill(this.col);
@@ -61,12 +60,12 @@ class Sprite {
       circle(x, y - 3, 6);
       circle(x + 20 * dx, y - 3, 6);
       // ear
-      fill(this.ncol);
+      fill(this.earCol);
       triangle(x, y - h + 4, x - 22 * dx, y - h + 10, x - 12 * dx, y - h - 10);
       // nose
       triangle(x + 10 * dx, y + 3, x + 18 * dx, y + 3, x + 14 * dx, y + 6);
       // whiskers
-      stroke(this.ncol);
+      stroke(this.earCol);
       line(x - 14 * dx, y + 3, x - 20 * dx, y + 3);
       line(x - 14 * dx, y, x - 20 * dx, y);
     } else {
@@ -79,13 +78,13 @@ class Sprite {
       circle(x - 12, y + 8 * dy, 6);
       circle(x + 12, y + 8 * dy, 6);
       // ears
-      fill(this.ncol);
+      fill(this.earCol);
       triangle(x - 6, y - (h - 12) * dy, x - 26, y - (h - 16) * dy, x - 18, y - (h + 4) * dy);
       triangle(x + 6, y - (h - 12) * dy, x + 26, y - (h - 16) * dy, x + 18, y - (h + 4) * dy);
       // nose
       triangle(x + 4, y + 13 * dy, x - 4, y + 13 * dy, x, y + 16 * dy);
       // whiskers
-      stroke(this.ncol);
+      stroke(this.earCol);
       line(x - 22, y + 10 * dy, x - 28, y + 10 * dy);
       line(x - 22, y + 13 * dy, x - 28, y + 13 * dy);
       line(x + 22, y + 10 * dy, x + 28, y + 10 * dy);
@@ -147,7 +146,7 @@ class Sprite {
   setColor(col) {
     if (!col) return;
     this.col = col;
-    this.ncol = this.getNCol();
+    this.earCol = this.earCol();
     this.draw(true);
   }
 
@@ -155,8 +154,8 @@ class Sprite {
     return this.col;
   }
 
-  getNCol() {
-    return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.5);
+  getEarCol() {
+    return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.75);
   }
 
   setDir(next, prev) {

@@ -67,7 +67,7 @@ class Sprite {
       triangle(x, y - h + 4, x - 22 * dx, y - h + 10, x - 12 * dx, y - h - 10);
       // nose
       fill(this.noseCol);
-      triangle(x + 12 * dx, y + 3, x + 20 * dx, y + 3, x + 16 * dx, y + 6);
+      triangle(x + 12 * dx, y + 4, x + 20 * dx, y + 4, x + 16 * dx, y + 7);
       // whiskers
       stroke(this.noseCol);
       line(x - 14 * dx, y + 3, x - 20 * dx, y + 3);
@@ -160,7 +160,8 @@ class Sprite {
   }
 
   getEarCol() {
-    return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.75);
+    // return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.75);
+    return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.5);
   }
 
   getNoseCol() {

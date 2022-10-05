@@ -14,7 +14,7 @@ async function setup() {
     turn(dir[i % 4]);
     for (let j = 0; j < 10; j += 1) {
       walk(10);
-      await sleep(0.3);
+      await sleep(0.5);
     }
     say('う〜ん');
     await sleep(1);

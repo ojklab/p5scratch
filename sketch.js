@@ -2,12 +2,13 @@
 // noprotect
 
 async function setup() {
-  start(240, 180);
+  start();
+  Sprite.flushScreen = false;
   setColor('orange');
 
   await sleep(1);
   // turn('N');
-  const dir = ['上', '左', '下', '右'];
+  const dir = ['右', '上', '左', '下'];
 
   for (let i = 0; i < 40; i += 1) {
     turn(dir[i % 4]);

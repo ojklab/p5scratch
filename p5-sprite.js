@@ -28,6 +28,8 @@ p5.prototype.start = (x = 100, y = 200, margin = false) => {
 };
 
 class Sprite {
+  static flushScreen = true;
+
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -39,7 +41,7 @@ class Sprite {
   }
 
   draw(keepState = false) {
-    background(255);
+    if (Sprite.flushScreen) background(255);
     noStroke();
 
     this.state = keepState ? this.state : !this.state;

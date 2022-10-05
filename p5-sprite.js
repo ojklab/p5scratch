@@ -90,7 +90,8 @@ class Sprite {
     }
   }
 
-  walk(steps = 10) {
+  walk() {
+    if (!steps) return;
     this.x += this.dir.x * steps;
     this.y += this.dir.y * steps;
     this.draw();
@@ -98,28 +99,24 @@ class Sprite {
 
   turn(dir) {
     switch (dir) {
-      case 'N':
       case '上':
         this.dir.x = 0;
         this.dir.y = -1;
         break;
-      case 'S':
       case '下':
         this.dir.x = 0;
         this.dir.y = 1;
         break;
-      case 'E':
       case '右':
         this.dir.x = 1;
         this.dir.y = 0;
         break;
-      case 'W':
       case '左':
         this.dir.x = -1;
         this.dir.y = 0;
         break;
       default:
-        console.error('方向はN/S/E/Wもしくは上/下/左/右で指定してください');
+        console.error('方向は上/下/左/右で指定してください');
         noLoop();
         break;
     }
@@ -137,24 +134,26 @@ class Sprite {
   }
 
   say(msg) {
+    if (!msg) return;
     this.draw(true);
     fill(0);
     noStroke();
     text(msg, this.x, this.y - 50);
   }
 
-  setColor(col = 'orange') {
+  setColor(col) {
+    if (!col) return;
     this.col = col;
     this.ncol = this.getNCol();
     this.draw(true);
   }
 
-  getNCol() {
-    return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.5);
-  }
-
   getColor() {
     return this.col;
+  }
+
+  getNCol() {
+    return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.5);
   }
 
   setDir(next, prev) {
@@ -165,7 +164,32 @@ class Sprite {
     }
   }
 
+  setX(x) {
+    if (!x) return;
+    const keepState = this.x == x;
+    this.setDir(x, this.x);
+    this.x = x;
+    this.draw(keepState);
+  }
+
+  getX() {
+    return this.x;
+  }
+
+  setY(y) {
+    if (!y) return;
+    const keepState = this.y == y;
+    this.setDir(y, this.y);
+    this.y = y;
+    this.draw(keepState);
+  }
+
+  getY() {
+    return this.y;
+  }
+
   setXY(x, y) {
+    if (!x || !y) return;
     const keepState = this.x == x && this.y == y;
     if (this.dir.x) {
       this.setDir(x, this.x);
@@ -176,28 +200,6 @@ class Sprite {
     }
     this.y = y;
     this.draw(keepState);
-  }
-
-  setX(x) {
-    const keepState = this.x == x;
-    this.setDir(x, this.x);
-    this.x = x;
-    this.draw(keepState);
-  }
-
-  setY(y) {
-    const keepState = this.y == y;
-    this.setDir(y, this.y);
-    this.y = y;
-    this.draw(keepState);
-  }
-
-  getX() {
-    return this.x;
-  }
-
-  getY() {
-    return this.y;
   }
 
   getXY() {
@@ -241,12 +243,20 @@ p5.prototype.setXY = (x, y) => {
   p5nyan.setXY(x, y);
 };
 
+p5.prototype.getXY = () => {
+  return p5nyan.getXY();
+};
+
 p5.prototype.moveToXY = (x, y) => {
   p5nyan.setXY(x, y);
 };
 
 p5.prototype.setX = (x) => {
   p5nyan.setX(x);
+};
+
+p5.prototype.getX = () => {
+  return p5nyan.getX();
 };
 
 p5.prototype.moveToX = (x) => {
@@ -257,18 +267,10 @@ p5.prototype.setY = (y) => {
   p5nyan.setY(y);
 };
 
-p5.prototype.moveToY = (y) => {
-  p5nyan.setY(y);
-};
-
-p5.prototype.getX = () => {
-  return p5nyan.getX();
-};
-
 p5.prototype.getY = () => {
   return p5nyan.getY();
 };
 
-p5.prototype.getPos = () => {
-  return p5nyan.getPos();
+p5.prototype.moveToY = (y) => {
+  p5nyan.setY(y);
 };

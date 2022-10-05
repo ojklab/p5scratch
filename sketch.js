@@ -3,8 +3,8 @@
 
 async function setup() {
   start();
-  Sprite.flushScreen = false;
-  setColor('orange');
+  // Sprite.flushScreen = false;
+  setColor('coral');
 
   await sleep(1);
   // turn('N');

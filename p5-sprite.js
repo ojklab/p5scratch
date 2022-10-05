@@ -34,8 +34,9 @@ class Sprite {
     this.x = x;
     this.y = y;
     this.dir = { x: 1, y: 0 };
-    this.col = 'orange';
+    this.col = 'coral';
     this.earCol = this.getEarCol();
+    this.noseCol = this.getNoseCol();
     this.state = false;
     this.draw();
   }
@@ -65,9 +66,10 @@ class Sprite {
       fill(this.earCol);
       triangle(x, y - h + 4, x - 22 * dx, y - h + 10, x - 12 * dx, y - h - 10);
       // nose
-      triangle(x + 10 * dx, y + 3, x + 18 * dx, y + 3, x + 14 * dx, y + 6);
+      fill(this.noseCol);
+      triangle(x + 12 * dx, y + 3, x + 20 * dx, y + 3, x + 16 * dx, y + 6);
       // whiskers
-      stroke(this.earCol);
+      stroke(this.noseCol);
       line(x - 14 * dx, y + 3, x - 20 * dx, y + 3);
       line(x - 14 * dx, y, x - 20 * dx, y);
     } else {
@@ -84,9 +86,10 @@ class Sprite {
       triangle(x - 6, y - (h - 12) * dy, x - 26, y - (h - 16) * dy, x - 18, y - (h + 4) * dy);
       triangle(x + 6, y - (h - 12) * dy, x + 26, y - (h - 16) * dy, x + 18, y - (h + 4) * dy);
       // nose
+      fill(this.noseCol);
       triangle(x + 4, y + 13 * dy, x - 4, y + 13 * dy, x, y + 16 * dy);
       // whiskers
-      stroke(this.earCol);
+      stroke(this.noseCol);
       line(x - 22, y + 10 * dy, x - 28, y + 10 * dy);
       line(x - 22, y + 13 * dy, x - 28, y + 13 * dy);
       line(x + 22, y + 10 * dy, x + 28, y + 10 * dy);
@@ -158,6 +161,10 @@ class Sprite {
 
   getEarCol() {
     return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.75);
+  }
+
+  getNoseCol() {
+    return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.5);
   }
 
   setDir(next, prev) {

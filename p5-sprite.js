@@ -32,7 +32,7 @@ class Sprite {
     this.x = x;
     this.y = y;
     this.dir = { x: 1, y: 0 };
-    this.col = 'coral';
+    this.col = 'orange';
     this.earCol = this.getEarCol();
     this.state = false;
     this.draw();

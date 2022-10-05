@@ -3,6 +3,8 @@
 let p5nyan;
 
 p5.prototype.start = (x = 100, y = 200, margin = false) => {
+  if (p5nyan) return;
+
   // キャンバスの設定
   createCanvas(480, 360);
   document.querySelector('canvas').style.border = 'solid 1px gray';
@@ -18,6 +20,8 @@ p5.prototype.start = (x = 100, y = 200, margin = false) => {
   // その他の設定
   frameRate(30);
   textAlign(CENTER, CENTER);
+  translate(width / 2, height / 2);
+
   colorMode(HSL, 360, 100, 100);
 
   // スプライトの生成

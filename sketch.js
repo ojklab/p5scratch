@@ -3,7 +3,7 @@
 
 async function setup() {
   start(240, 180);
-  setColor('lightgreen');
+  setColor('orange');
 
   await sleep(1);
   // turn('N');

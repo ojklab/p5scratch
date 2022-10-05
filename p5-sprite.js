@@ -33,7 +33,7 @@ class Sprite {
     this.y = y;
     this.dir = { x: 1, y: 0 };
     this.col = 'orange';
-    this.earCol = getEarCol();
+    this.earCol = this.getEarCol();
     this.state = false;
     this.draw();
   }
@@ -146,7 +146,7 @@ class Sprite {
   setColor(col) {
     if (!col) return;
     this.col = col;
-    this.earCol = getEarCol();
+    this.earCol = this.getEarCol();
     this.draw(true);
   }
 

@@ -93,7 +93,7 @@ class Sprite {
     }
   }
 
-  walk() {
+  walk(steps) {
     if (!steps) return;
     this.x += this.dir.x * steps;
     this.y += this.dir.y * steps;

@@ -3,6 +3,8 @@
 let p5nyan;
 
 p5.prototype.start = (x = 100, y = 200, margin = false) => {
+  if (p5nyan) return;
+
   // キャンバスの設定
   createCanvas(480, 360);
   document.querySelector('canvas').style.border = 'solid 1px gray';
@@ -18,6 +20,7 @@ p5.prototype.start = (x = 100, y = 200, margin = false) => {
   // その他の設定
   frameRate(30);
   textAlign(CENTER, CENTER);
+
   colorMode(HSL, 360, 100, 100);
 
   // スプライトの生成
@@ -25,6 +28,8 @@ p5.prototype.start = (x = 100, y = 200, margin = false) => {
 };
 
 class Sprite {
+  static flushScreen = true;
+
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -38,7 +43,7 @@ class Sprite {
   }
 
   draw(keepState = false) {
-    background(255);
+    if (Sprite.flushScreen) background(255);
     noStroke();
 
     this.eatFish();
@@ -65,7 +70,8 @@ class Sprite {
       fill(this.dcol);
       triangle(x, y - h + 4, x - 22 * dx, y - h + 10, x - 12 * dx, y - h - 10);
       // nose
-      triangle(x + 10 * dx, y + 3, x + 18 * dx, y + 3, x + 14 * dx, y + 6);
+      fill(this.noseCol);
+      triangle(x + 12 * dx, y + 4, x + 20 * dx, y + 4, x + 16 * dx, y + 7);
       // whiskers
       stroke(this.dcol);
       line(x - 14 * dx, y + 3, x - 20 * dx, y + 3);
@@ -103,28 +109,24 @@ class Sprite {
 
   turn(dir) {
     switch (dir) {
-      case 'N':
       case '上':
         this.dir.x = 0;
         this.dir.y = -1;
         break;
-      case 'S':
       case '下':
         this.dir.x = 0;
         this.dir.y = 1;
         break;
-      case 'E':
       case '右':
         this.dir.x = 1;
         this.dir.y = 0;
         break;
-      case 'W':
       case '左':
         this.dir.x = -1;
         this.dir.y = 0;
         break;
       default:
-        console.error('方向はN/S/E/Wもしくは上/下/左/右で指定してください');
+        console.error('方向は上/下/左/右で指定してください');
         noLoop();
         break;
     }
@@ -185,6 +187,10 @@ class Sprite {
     this.draw(keepState);
   }
 
+  getXY() {
+    return [this.x, this.y];
+  }
+
   setX(x) {
     if (!isFinite(x)) return;
     const keepState = this.x == x;
@@ -195,6 +201,10 @@ class Sprite {
     this.setDir(x, this.x);
     this.x = x;
     this.draw(keepState);
+  }
+
+  getX() {
+    return this.x;
   }
 
   setY(y) {
@@ -209,16 +219,8 @@ class Sprite {
     this.draw(keepState);
   }
 
-  getX() {
-    return this.x;
-  }
-
   getY() {
     return this.y;
-  }
-
-  getXY() {
-    return [this.x, this.y];
   }
 
   /* 以下、魚の描画  */
@@ -303,6 +305,10 @@ p5.prototype.setXY = (x, y) => {
   p5nyan.setXY(x, y);
 };
 
+p5.prototype.getXY = () => {
+  return p5nyan.getXY();
+};
+
 p5.prototype.moveToXY = (x, y) => {
   p5nyan.setXY(x, y);
 };
@@ -311,20 +317,16 @@ p5.prototype.setX = (x) => {
   p5nyan.setX(x);
 };
 
+p5.prototype.getX = () => {
+  return p5nyan.getX();
+};
+
 p5.prototype.moveToX = (x) => {
   p5nyan.setX(x);
 };
 
 p5.prototype.setY = (y) => {
   p5nyan.setY(y);
-};
-
-p5.prototype.moveToY = (y) => {
-  p5nyan.setY(y);
-};
-
-p5.prototype.getX = () => {
-  return p5nyan.getX();
 };
 
 p5.prototype.getY = () => {

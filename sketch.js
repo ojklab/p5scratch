@@ -2,29 +2,49 @@
 // noprotect
 
 async function setup() {
-  start(240, 180);
-  setColor('lightgreen');
-
+  start();
   await sleep(1);
-  // turn('N');
-  const dir = ['上', '左', '下', '右'];
 
-  for (let i = 0; i < 40; i += 1) {
-    turn(dir[i % 4]);
-    for (let j = 0; j < 10; j += 1) {
-      walk(10);
-      await sleep(0.3);
-    }
-    say('う〜ん');
-    await sleep(1);
-  }
+  // ここから下にコードを書いていきます
+
+  walk(100);
+  await sleep(1);
+
+  turn('上'); // 上に向きを変える
+  await sleep(1);
+  walk(100);
+  await sleep(1);
+
+  turnBack(); // 向きを反転する
+  await sleep(1);
+  walk(100);
+  await sleep(1);
+
+  say('みどりいろに変身！');
+  await sleep(1);
+  setColor('aa'); // 色を変える
+}
+
+function mousePressed() {
+  const col = color(random(360), random(50, 100), random(50, 100));
+  putFish(mouseX, mouseY, col);
 }
 
 function keyPressed() {
-  let x = getX();
+  const x = getX();
+  const y = getY();
+  const step = 30;
   if (keyCode === LEFT_ARROW) {
-    setX(x - 10);
+    // turn('左');
+    // walk(10);
+    setX(x - step);
   } else if (keyCode === RIGHT_ARROW) {
-    setX(x + 10);
+    setX(x + step);
+  } else if (keyCode === UP_ARROW) {
+    setY(y - step);
+  } else if (keyCode === DOWN_ARROW) {
+    setY(y + step);
+  } else if (keyCode === SHIFT) {
+    moveFish();
   }
 }

@@ -30,15 +30,19 @@ class Sprite {
     this.y = y;
     this.dir = { x: 1, y: 0 };
     this.col = 'coral';
-    this.ncol = this.getNCol();
+    this.dcol = this.getDarkCol(this.col);
     this.size = 60;
     this.state = false;
+    this.fishList = [];
     this.draw();
   }
 
   draw(keepState = false) {
     background(255);
     noStroke();
+
+    this.eatFish();
+    this.drawFish();
 
     this.state = keepState ? this.state : !this.state;
     const x = this.x;
@@ -48,7 +52,7 @@ class Sprite {
     if (this.dir.x) {
       const dx = this.dir.x;
       // ear
-      fill(this.ncol);
+      fill(this.dcol);
       triangle(x + 8 * dx, y - h + 2, x + 24 * dx, y - h + 10, x + 20 * dx, y - h - 6);
       // head
       fill(this.col);
@@ -58,12 +62,12 @@ class Sprite {
       circle(x, y - 3, 6);
       circle(x + 20 * dx, y - 3, 6);
       // ear
-      fill(this.ncol);
+      fill(this.dcol);
       triangle(x, y - h + 4, x - 22 * dx, y - h + 10, x - 12 * dx, y - h - 10);
       // nose
       triangle(x + 10 * dx, y + 3, x + 18 * dx, y + 3, x + 14 * dx, y + 6);
       // whiskers
-      stroke(this.ncol);
+      stroke(this.dcol);
       line(x - 14 * dx, y + 3, x - 20 * dx, y + 3);
       line(x - 14 * dx, y, x - 20 * dx, y);
     } else {
@@ -76,13 +80,13 @@ class Sprite {
       circle(x - 12, y + 8 * dy, 6);
       circle(x + 12, y + 8 * dy, 6);
       // ears
-      fill(this.ncol);
+      fill(this.dcol);
       triangle(x - 6, y - (h - 12) * dy, x - 26, y - (h - 16) * dy, x - 18, y - (h + 4) * dy);
       triangle(x + 6, y - (h - 12) * dy, x + 26, y - (h - 16) * dy, x + 18, y - (h + 4) * dy);
       // nose
       triangle(x + 4, y + 13 * dy, x - 4, y + 13 * dy, x, y + 16 * dy);
       // whiskers
-      stroke(this.ncol);
+      stroke(this.dcol);
       line(x - 22, y + 10 * dy, x - 28, y + 10 * dy);
       line(x - 22, y + 13 * dy, x - 28, y + 13 * dy);
       line(x + 22, y + 10 * dy, x + 28, y + 10 * dy);
@@ -90,7 +94,8 @@ class Sprite {
     }
   }
 
-  walk(steps = 10) {
+  walk(steps) {
+    if (!isFinite(steps)) return;
     this.x += this.dir.x * steps;
     this.y += this.dir.y * steps;
     this.draw();
@@ -137,20 +142,21 @@ class Sprite {
   }
 
   say(msg) {
+    if (!msg) return;
     this.draw(true);
     fill(0);
     noStroke();
     text(msg, this.x, this.y - 50);
   }
 
-  setColor(col = 'orange') {
+  setColor(col = 'coral') {
     this.col = col;
-    this.ncol = this.getNCol();
+    this.dcol = this.getDarkCol(col);
     this.draw(true);
   }
 
-  getNCol() {
-    return color(hue(this.col), saturation(this.col), lightness(this.col) * 0.5);
+  getDarkCol(col) {
+    return color(hue(col), saturation(col), lightness(col) * 0.5);
   }
 
   getColor() {
@@ -166,27 +172,38 @@ class Sprite {
   }
 
   setXY(x, y) {
+    if (!isFinite(x) || !isFinite(y)) return;
     const keepState = this.x == x && this.y == y;
+    // 直前と同じ方向を向く
     if (this.dir.x) {
       this.setDir(x, this.x);
-    }
-    this.x = x;
-    if (this.dir.y) {
+    } else {
       this.setDir(y, this.y);
     }
+    this.x = x;
     this.y = y;
     this.draw(keepState);
   }
 
   setX(x) {
+    if (!isFinite(x)) return;
     const keepState = this.x == x;
+    if (this.dir.y) {
+      this.dir.x = true;
+      this.dir.y = 0;
+    }
     this.setDir(x, this.x);
     this.x = x;
     this.draw(keepState);
   }
 
   setY(y) {
+    if (!isFinite(y)) return;
     const keepState = this.y == y;
+    if (this.dir.x) {
+      this.dir.x = 0;
+      this.dir.y = true;
+    }
     this.setDir(y, this.y);
     this.y = y;
     this.draw(keepState);
@@ -203,11 +220,56 @@ class Sprite {
   getXY() {
     return [this.x, this.y];
   }
+
+  /* 以下、魚の描画  */
+
+  putFish(x, y, col = 'skyblue') {
+    if (!isFinite(x) || !isFinite(y)) return;
+
+    this.fishList.push({ x: x, y: y, col: col });
+    this.draw(true);
+  }
+
+  drawFish() {
+    for (let fish of this.fishList) {
+      this.fish(fish.x, fish.y, fish.col);
+    }
+  }
+
+  moveFish(step = 10) {
+    for (let i = 0; i < this.fishList.length; i += 1) {
+      this.fishList[i].x -= step;
+      if (this.fishList[i].x < -2) this.fishList[i].x = 500;
+    }
+    this.draw(true);
+  }
+
+  fish(x, y, col) {
+    fill(col);
+    noStroke();
+    ellipse(x, y, 30, 15);
+    const tailCol = this.getDarkCol(col);
+    fill(tailCol);
+    circle(x - 5, y - 1, 4);
+    triangle(x + 15, y, x + 22, y + 7, x + 22, y - 7);
+  }
+
+  eatFish() {
+    this.fishList = this.fishList.filter((fish) => {
+      const x = fish.x;
+      const y = fish.y;
+      if (x - 15 < this.x + 30 && x + 22 + 7 > this.x - 30 && y - 8 < this.y + 25 && y + 8 > this.y - 25) {
+        return false;
+      }
+      return true;
+    });
+  }
 }
 
 /* メソッドを直接呼び出せるように */
 
 p5.prototype.sleep = (sec) => {
+  if (sec < 0) return;
   return new Promise((resolve) => {
     setTimeout(() => resolve(), sec * 1000);
   });
@@ -269,6 +331,14 @@ p5.prototype.getY = () => {
   return p5nyan.getY();
 };
 
-p5.prototype.getPos = () => {
-  return p5nyan.getPos();
+p5.prototype.getXY = () => {
+  return p5nyan.getXY();
+};
+
+p5.prototype.putFish = (x, y, col) => {
+  return p5nyan.putFish(x, y, col);
+};
+
+p5.prototype.moveFish = (step) => {
+  return p5nyan.moveFish(step);
 };

@@ -36,7 +36,6 @@ class Sprite {
     this.dir = { x: 1, y: 0 };
     this.col = 'coral';
     this.dcol = this.getDarkCol(this.col);
-    this.size = 60;
     this.state = false;
     this.fishList = [];
     this.draw();
@@ -70,7 +69,6 @@ class Sprite {
       fill(this.dcol);
       triangle(x, y - h + 4, x - 22 * dx, y - h + 10, x - 12 * dx, y - h - 10);
       // nose
-      fill(this.noseCol);
       triangle(x + 12 * dx, y + 4, x + 20 * dx, y + 4, x + 16 * dx, y + 7);
       // whiskers
       stroke(this.dcol);
@@ -233,12 +231,14 @@ class Sprite {
   }
 
   drawFish() {
+    if (!this.fishList) return;
     for (let fish of this.fishList) {
       this.fish(fish.x, fish.y, fish.col);
     }
   }
 
   moveFish(step = 10) {
+    if (!this.fishList) return;
     for (let i = 0; i < this.fishList.length; i += 1) {
       this.fishList[i].x -= step;
       if (this.fishList[i].x < -2) this.fishList[i].x = 500;
@@ -257,6 +257,7 @@ class Sprite {
   }
 
   eatFish() {
+    if (!this.fishList) return;
     this.fishList = this.fishList.filter((fish) => {
       const x = fish.x;
       const y = fish.y;

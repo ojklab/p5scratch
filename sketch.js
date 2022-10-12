@@ -2,14 +2,21 @@
 // noprotect
 
 async function setup() {
-  start(100, 180, true); // ピゴニャンの登場位置を変更
+  start(100, 300, true);
   await sleep(1);
+  Sprite.flushScreen = false;
 
   // ここから下にコードを書いていきます
 
-  fill(255, 0, 127);
-  stroke("blue");
-  circle(240, 180, 100);
+  say(getXY()); // 座標(100, 200)の位置にいる
+
+  await sleep(1);
+  walk(200); // 右方向に200進む（x座標は 100+200→300 に移動）
+  say(getX()); // ピゴニャンは「300」としゃべる
+
+  await sleep(1);
+  setY(100);
+  say(getY()); // ピゴニャンは「100」としゃべる
 }
 
 function mousePressed() {

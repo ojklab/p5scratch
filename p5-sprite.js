@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 let p5nyan;
 
@@ -7,9 +7,9 @@ p5.prototype.start = (x = 100, y = 200, margin = false) => {
 
   // キャンバスの設定
   createCanvas(480, 360);
-  document.querySelector('canvas').style.border = 'solid 1px gray';
+  document.querySelector("canvas").style.border = "solid 1px gray";
   if (margin) {
-    document.querySelector('canvas').style.margin = '50px';
+    document.querySelector("canvas").style.margin = "50px";
   }
   // document.addEventListener('contextmenu', (e) => e.preventDefault());
 
@@ -34,7 +34,7 @@ class Sprite {
     this.x = x;
     this.y = y;
     this.dir = { x: 1, y: 0 };
-    this.col = 'coral';
+    this.col = "coral";
     this.dcol = this.getDarkCol(this.col);
     this.state = false;
     this.fishList = [];
@@ -107,24 +107,24 @@ class Sprite {
 
   turn(dir) {
     switch (dir) {
-      case '上':
+      case "上":
         this.dir.x = 0;
         this.dir.y = -1;
         break;
-      case '下':
+      case "下":
         this.dir.x = 0;
         this.dir.y = 1;
         break;
-      case '右':
+      case "右":
         this.dir.x = 1;
         this.dir.y = 0;
         break;
-      case '左':
+      case "左":
         this.dir.x = -1;
         this.dir.y = 0;
         break;
       default:
-        console.error('方向は上/下/左/右で指定してください');
+        console.error("方向は上/下/左/右で指定してください");
         noLoop();
         break;
     }
@@ -149,7 +149,7 @@ class Sprite {
     text(msg, this.x, this.y - 50);
   }
 
-  setColor(col = 'coral') {
+  setColor(col = "coral") {
     this.col = col;
     this.dcol = this.getDarkCol(col);
     this.draw(true);
@@ -223,7 +223,7 @@ class Sprite {
 
   /* 以下、魚の描画  */
 
-  putFish(x, y, col = 'skyblue') {
+  putFish(x, y, col = "skyblue") {
     if (!isFinite(x) || !isFinite(y)) return;
 
     this.fishList.push({ x: x, y: y, col: col });
@@ -241,7 +241,7 @@ class Sprite {
     if (!this.fishList) return;
     for (let i = 0; i < this.fishList.length; i += 1) {
       this.fishList[i].x -= step;
-      if (this.fishList[i].x < -2) this.fishList[i].x = 500;
+      if (this.fishList[i].x < -11) this.fishList[i].x = 495;
     }
     this.draw(true);
   }

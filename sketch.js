@@ -2,27 +2,21 @@
 // noprotect
 
 async function setup() {
-  start();
+  start(100, 200, true);
   await sleep(1);
 
   // ここから下にコードを書いていきます
 
-  walk(100);
+  setX(300); // x座標300の位置へ移動
   await sleep(1);
 
-  turn('上'); // 上に向きを変える
-  await sleep(1);
-  walk(100);
+  setY(60); // y座標60の位置へ移動
   await sleep(1);
 
-  turnBack(); // 向きを反転する
-  await sleep(1);
-  walk(100);
+  setXY(240, 180); // (x, y)=(240, 180)の位置へ移動
   await sleep(1);
 
-  say('みどりいろに変身！');
-  await sleep(1);
-  setColor('aa'); // 色を変える
+  say("ここが真ん中だよ");
 }
 
 function mousePressed() {

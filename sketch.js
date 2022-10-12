@@ -7,16 +7,7 @@ async function setup() {
 
   // ここから下にコードを書いていきます
 
-  setX(300); // x座標300の位置へ移動
-  await sleep(1);
-
-  setY(60); // y座標60の位置へ移動
-  await sleep(1);
-
-  setXY(240, 180); // (x, y)=(240, 180)の位置へ移動
-  await sleep(1);
-
-  say("ここが真ん中だよ");
+  circle(240, 180, 100);
 }
 
 function mousePressed() {

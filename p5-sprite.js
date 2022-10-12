@@ -43,8 +43,8 @@ class Sprite {
 
   draw(keepState = false) {
     if (Sprite.flushScreen) background(255);
-    noStroke();
 
+    // 魚関係
     this.eatFish();
     this.drawFish();
 
@@ -56,6 +56,7 @@ class Sprite {
     if (this.dir.x) {
       const dx = this.dir.x;
       // ear
+      noStroke();
       fill(this.dcol);
       triangle(x + 8 * dx, y - h + 2, x + 24 * dx, y - h + 10, x + 20 * dx, y - h - 6);
       // head
@@ -77,6 +78,7 @@ class Sprite {
     } else {
       const dy = this.dir.y;
       // head
+      noStroke();
       fill(this.col);
       ellipse(x, y, 60, h * 2);
       // eyes
@@ -96,6 +98,10 @@ class Sprite {
       line(x + 22, y + 10 * dy, x + 28, y + 10 * dy);
       line(x + 22, y + 13 * dy, x + 28, y + 13 * dy);
     }
+
+    // 色設定を初期化（stroke(0) やstroke("black") だと何故か無効になる）
+    stroke(1);
+    fill(255);
   }
 
   walk(steps) {
@@ -237,15 +243,6 @@ class Sprite {
     }
   }
 
-  moveFish(step = 10) {
-    if (!this.fishList) return;
-    for (let i = 0; i < this.fishList.length; i += 1) {
-      this.fishList[i].x -= step;
-      if (this.fishList[i].x < -11) this.fishList[i].x = 495;
-    }
-    this.draw(true);
-  }
-
   fish(x, y, col) {
     fill(col);
     noStroke();
@@ -254,6 +251,15 @@ class Sprite {
     fill(tailCol);
     circle(x - 5, y - 1, 4);
     triangle(x + 15, y, x + 22, y + 7, x + 22, y - 7);
+  }
+
+  moveFish(step = 10) {
+    if (!this.fishList) return;
+    for (let i = 0; i < this.fishList.length; i += 1) {
+      this.fishList[i].x -= step;
+      if (this.fishList[i].x < -11) this.fishList[i].x = 495;
+    }
+    this.draw(true);
   }
 
   eatFish() {

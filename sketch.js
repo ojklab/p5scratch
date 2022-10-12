@@ -2,16 +2,18 @@
 // noprotect
 
 async function setup() {
-  start(100, 200, true);
+  start(100, 180, true); // ピゴニャンの登場位置を変更
   await sleep(1);
 
   // ここから下にコードを書いていきます
 
+  fill(255, 0, 127);
+  stroke("blue");
   circle(240, 180, 100);
 }
 
 function mousePressed() {
-  const col = color(random(360), random(50, 100), random(50, 100));
+  const col = color(random(100, 255), random(100, 255), random(100, 255));
   putFish(mouseX, mouseY, col);
 }
 

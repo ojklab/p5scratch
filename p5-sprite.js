@@ -21,8 +21,6 @@ p5.prototype.start = (x = 100, y = 200, margin = false) => {
   frameRate(30);
   textAlign(CENTER, CENTER);
 
-  colorMode(HSL, 360, 100, 100);
-
   // スプライトの生成
   p5nyan = new Sprite(x, y);
 };
@@ -162,7 +160,10 @@ class Sprite {
   }
 
   getDarkCol(col) {
-    return color(hue(col), saturation(col), lightness(col) * 0.5);
+    colorMode(HSL, 360, 100, 100);
+    const dcol = color(hue(col), saturation(col), lightness(col) * 0.5);
+    colorMode(RGB);
+    return dcol;
   }
 
   getColor() {

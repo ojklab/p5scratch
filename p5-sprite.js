@@ -126,7 +126,7 @@ class Sprite {
         } else {
           // bell
           fill(this.dcol);
-          ellipse(x + 6 * dx, y + 20, 12, 6);
+          ellipse(x + 6 * dx, y + 20, 14, 5);
           noStroke();
           fill("gold");
           circle(x + 12 * dx, y + 23, 5);

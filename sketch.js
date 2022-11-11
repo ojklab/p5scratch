@@ -2,7 +2,7 @@
 // noprotect
 
 async function setup() {
-  // Sprite.flushScreen = false;
+  Sprite.flushScreen = false;
   // Sprite.withBody = false;
   start(240, 180, true);
   // await sleep(1);

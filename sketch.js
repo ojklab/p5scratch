@@ -2,21 +2,30 @@
 // noprotect
 
 async function setup() {
-  start(100, 300, true);
-  await sleep(1);
-  Sprite.flushScreen = false;
+  // Sprite.flushScreen = false;
+  // Sprite.withBody = false;
+  start(240, 180, true);
+  // await sleep(1);
+
+  setXY(310, 180);
+
+  setXY(170, 180);
+  setXY(100, 180);
+
+  turn("下");
+  setXY(240, 300);
+
+  setXY(240, 60);
+
+  // return;
+  setXY(60, 60);
+  turn("右");
+  for (let i = 0; i < 50; i += 1) {
+    walk(10);
+    await sleep(0.5);
+  }
 
   // ここから下にコードを書いていきます
-
-  say(getXY()); // 座標(100, 200)の位置にいる
-
-  await sleep(1);
-  walk(200); // 右方向に200進む（x座標は 100+200→300 に移動）
-  say(getX()); // ピゴニャンは「300」としゃべる
-
-  await sleep(1);
-  setY(100);
-  say(getY()); // ピゴニャンは「100」としゃべる
 }
 
 function mousePressed() {

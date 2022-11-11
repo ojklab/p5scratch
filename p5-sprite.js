@@ -20,6 +20,8 @@ p5.prototype.start = (x = 100, y = 200, margin = false) => {
   // その他の設定
   frameRate(30);
   textAlign(CENTER, CENTER);
+  rectMode(CENTER);
+  strokeCap(ROUND);
 
   // スプライトの生成
   p5nyan = new Sprite(x, y);
@@ -27,13 +29,15 @@ p5.prototype.start = (x = 100, y = 200, margin = false) => {
 
 class Sprite {
   static flushScreen = true;
+  static withBody = true;
 
   constructor(x, y) {
     this.x = x;
     this.y = y;
     this.dir = { x: 1, y: 0 };
     this.col = "coral";
-    this.dcol = this.getDarkCol(this.col);
+    this.dcol = this.getDarkColor(this.col);
+    this.pcol = this.getPaleColor(this.col, 0.75);
     this.state = false;
     this.fishList = [];
     this.draw();
@@ -49,10 +53,92 @@ class Sprite {
     this.state = keepState ? this.state : !this.state;
     const x = this.x;
     const y = this.y;
-    const h = this.state ? 25 : 23;
+    const h = 22;
 
+    // 左右向き
     if (this.dir.x) {
       const dx = this.dir.x;
+
+      if (Sprite.withBody) {
+        // tail
+        strokeWeight(3);
+        stroke(this.dcol);
+        let p = { x: x - 15 * dx, y: y + 35 };
+        line(p.x + 9 * dx, p.y - 4, p.x, p.y);
+        line(p.x, p.y, p.x - 4 * dx, p.y - 2);
+        // 手前脚が前
+        if (this.state) {
+          // back arm
+          stroke(this.pcol);
+          strokeWeight(4.5);
+          p = { x: x + 16 * dx, y: y + 26 };
+          line(p.x - 5 * dx, p.y - 4, p.x, p.y);
+          line(p.x, p.y, p.x + 3 * dx, y + 23);
+          // back leg
+          strokeWeight(5.5);
+          p = { x: x - 7 * dx, y: y + 39 };
+          line(p.x + 7 * dx, p.y - 9, p.x, p.y);
+          line(p.x, p.y, p.x + 8 * dx, p.y);
+          // front arm
+          stroke(this.col);
+          strokeWeight(5);
+          line(x - 9 * dx, y + h + 1, x - 15 * dx, y + 25);
+          line(x - 15 * dx, y + 25, x - 13 * dx, y + 29);
+          // front leg
+          strokeWeight(6);
+          p = { x: x + 10 * dx, y: y + 38 };
+          line(p.x - 10 * dx, p.y - 8, p.x, p.y);
+          line(p.x, p.y, p.x + 7 * dx, p.y - 3);
+          noStroke();
+        }
+        // 手前脚が後
+        else {
+          // back arm
+          stroke(this.pcol);
+          strokeWeight(4.5);
+          p = { x: x - 12 * dx, y: y + 25 };
+          line(p.x + 6 * dx, p.y - 2, p.x, p.y);
+          line(p.x, p.y, p.x + 0 * dx, p.y + 3);
+          // back leg
+          strokeWeight(5.5);
+          p = { x: x + 12 * dx, y: y + 38 };
+          line(p.x - 6 * dx, p.y - 7, p.x, p.y);
+          line(p.x, p.y, p.x + 6 * dx, p.y - 3);
+          // front leg
+          strokeWeight(6);
+          p = { x: x - 8 * dx, y: y + 39 };
+          stroke(this.col);
+          line(p.x + 6 * dx, p.y - 8, p.x, p.y);
+          line(p.x, p.y, p.x + 10 * dx, p.y);
+          noStroke();
+        }
+        // body
+        noStroke();
+        fill(this.col);
+        square(x + 2 * dx, y + 22, 22, 5);
+        if (this.state) {
+          // bell
+          fill(this.dcol);
+          ellipse(x + 4 * dx, y + 20, 18, 6);
+          noStroke();
+          fill("gold");
+          circle(x + 10 * dx, y + 23, 5);
+        } else {
+          // bell
+          fill(this.dcol);
+          ellipse(x + 6 * dx, y + 20, 12, 6);
+          noStroke();
+          fill("gold");
+          circle(x + 12 * dx, y + 23, 5);
+          // front arm
+          strokeWeight(5);
+          p = { x: x + 15 * dx, y: y + 28 };
+          stroke(this.col);
+          line(p.x - 8 * dx, p.y - 2, p.x, p.y);
+          line(p.x, p.y, p.x + 3 * dx, p.y - 4);
+        }
+      }
+
       // ear
       noStroke();
       fill(this.dcol);
@@ -63,18 +149,33 @@ class Sprite {
       // eyes
       fill(0);
       circle(x, y - 3, 6);
-      circle(x + 20 * dx, y - 3, 6);
+      circle(x + 22 * dx, y - 3, 5.75);
       // ear
       fill(this.dcol);
       triangle(x, y - h + 4, x - 22 * dx, y - h + 10, x - 12 * dx, y - h - 10);
       // nose
       triangle(x + 12 * dx, y + 4, x + 20 * dx, y + 4, x + 16 * dx, y + 7);
       // whiskers
+      strokeWeight(1);
       stroke(this.dcol);
-      line(x - 14 * dx, y + 3, x - 20 * dx, y + 3);
-      line(x - 14 * dx, y, x - 20 * dx, y);
-    } else {
+      line(x - 12 * dx, y + 4, x - 18 * dx, y + 4);
+      line(x - 12 * dx, y + 1, x - 18 * dx, y + 1);
+      line(x + 32 * dx, y + 4, x + 30 * dx, y + 4);
+      line(x + 32 * dx, y + 1, x + 30 * dx, y + 1);
+    }
+    // 上下向き
+    else {
       const dy = this.dir.y;
+
+      if (Sprite.withBody) {
+        // 下向きのときの右脚が前
+        if (this.state) {
+        }
+        // 下向きのときの右脚が後
+        else {
+        }
+      }
+
       // head
       noStroke();
       fill(this.col);
@@ -133,7 +234,9 @@ class Sprite {
         break;
     }
 
-    this.draw(true);
+    if (Sprite.flushScreen) {
+      this.draw(true);
+    }
   }
 
   turnBack() {
@@ -142,7 +245,9 @@ class Sprite {
     } else {
       this.dir.y *= -1;
     }
-    this.draw(true);
+    if (Sprite.flushScreen) {
+      this.draw(true);
+    }
   }
 
   say(msg) {
@@ -155,15 +260,22 @@ class Sprite {
 
   setColor(col = "coral") {
     this.col = col;
-    this.dcol = this.getDarkCol(col);
+    this.dcol = this.getDarkColor(col);
     this.draw(true);
   }
 
-  getDarkCol(col) {
+  getDarkColor(col, s = 0.5) {
     colorMode(HSL, 360, 100, 100);
-    const dcol = color(hue(col), saturation(col), lightness(col) * 0.5);
+    const dcol = color(hue(col), saturation(col), lightness(col) * s);
     colorMode(RGB);
     return dcol;
+  }
+
+  getPaleColor(col, s = 0.5) {
+    colorMode(HSL, 360, 100, 100);
+    const pcol = color(hue(col), saturation(col) * s, lightness(col));
+    colorMode(RGB);
+    return pcol;
   }
 
   getColor() {
@@ -181,7 +293,6 @@ class Sprite {
   setXY(x, y) {
     if (!isFinite(x) || !isFinite(y)) return;
     const keepState = this.x == x && this.y == y;
-    // 直前と同じ方向を向く
     if (this.dir.x) {
       this.setDir(x, this.x);
     } else {
@@ -248,7 +359,7 @@ class Sprite {
     fill(col);
     noStroke();
     ellipse(x, y, 30, 15);
-    const tailCol = this.getDarkCol(col);
+    const tailCol = this.getDarkColor(col);
     fill(tailCol);
     circle(x - 5, y - 1, 4);
     triangle(x + 15, y, x + 22, y + 7, x + 22, y - 7);

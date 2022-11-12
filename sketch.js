@@ -2,28 +2,26 @@
 // noprotect
 
 async function setup() {
-  Sprite.flushScreen = false;
+  // Sprite.flushScreen = false;
   // Sprite.withBody = false;
   start(240, 180, true);
-  // await sleep(1);
-
-  setXY(310, 180);
-
-  setXY(170, 180);
-  setXY(100, 180);
+  await sleep(1);
 
   turn("下");
-  setXY(240, 300);
-
-  setXY(240, 60);
-
-  // return;
-  setXY(60, 60);
-  turn("右");
-  for (let i = 0; i < 50; i += 1) {
-    walk(10);
-    await sleep(0.5);
-  }
+  setXY(170, 30);
+  setXY(170, 35);
+  setXY(170, 180);
+  setXY(100, 30);
+  setXY(100, 35);
+  setXY(100, 180);
+  say("Hello");
+  setXY(310, 330);
+  setXY(310, 335);
+  setXY(310, 180);
+  setXY(380, 330);
+  setXY(380, 335);
+  setXY(380, 180);
+  say("Hello");
 
   // ここから下にコードを書いていきます
 }
@@ -49,5 +47,7 @@ function keyPressed() {
     setY(y + step);
   } else if (keyCode === SHIFT) {
     moveFish();
+  } else if (key === "s") {
+    say("こんにちは");
   }
 }

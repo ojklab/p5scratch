@@ -2,10 +2,24 @@
 // noprotect
 
 async function setup() {
-  // Sprite.flushScreen = false;
+  Sprite.flushScreen = false;
   // Sprite.withBody = false;
-  start(240, 180, true);
-  await sleep(1);
+  start(200, 0, true);
+
+  turn("下");
+  walk(100);
+  walk(80);
+  setXY(280, 360);
+  turn("上");
+  walk(100);
+  walk(80);
+  setXY(120, 180);
+  walk(80);
+  setXY(360, 180);
+  walk(80);
+
+  return;
+  // await sleep(1);
 
   turn("下");
   setXY(170, 30);

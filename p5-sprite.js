@@ -39,7 +39,7 @@ class Sprite {
     this.dir = { x: 1, y: 0 };
     this.col = "coral";
     this.dcol = this.getDarkColor(this.col);
-    this.pcol = this.getPaleColor(this.col, 0.75);
+    this.pcol = this.getPaleColor(this.col);
     this.state = false;
     this.keepH = false;
     this.fishList = [];
@@ -70,9 +70,8 @@ class Sprite {
     // 上下向き
     else {
       if (Sprite.withBody) {
-        const y = this.y - 10 * this.dir.y + 10;
-        this.drawBodyV(this.x, y, this.dir.y);
-        this.drawHeadV(this.x, y, this.dir.y, saying);
+        this.drawBodyV(this.x, this.y, this.dir.y);
+        this.drawHeadV(this.x, this.y, this.dir.y, saying);
       } else {
         this.drawHeadV(this.x, this.y, this.dir.y, saying);
       }
@@ -97,31 +96,17 @@ class Sprite {
     if (this.state) {
       // back arm
       stroke(this.pcol);
-      strokeWeight(4.25);
-      if (Sprite.withElbow) {
-        p = { x: x + 16 * d, y: y + 26 };
-        line(p.x - 5 * d, p.y - 4, p.x, p.y);
-        line(p.x, p.y, p.x + 3 * d, y + 23);
-      } else {
-        p = { x: x + 17 * d, y: y + 27.5 };
-        line(p.x - 5 * d, p.y - 3, p.x, p.y);
-      }
+      strokeWeight(4.5);
+      line(x + 12 * d, y + 24.5, x + 17 * d, y + 27.5);
       // back leg
       strokeWeight(5.5);
       p = { x: x - 7 * d, y: y + 39.5 };
       line(p.x + 8 * d, p.y - 9, p.x, p.y);
       line(p.x, p.y, p.x + 6 * d, p.y);
-      // front arm（肘なし）
+      // front arm
       stroke(this.col);
       strokeWeight(5);
-      if (Sprite.withElbow) {
-        p = { x: x - 15 * d, y: y + 25 };
-        line(p.x + 6 * d, p.y - 2, p.x, p.y);
-        line(p.x, p.y, p.x + 2 * d, p.y + 4);
-      } else {
-        p = { x: x - 16 * d, y: y + 27.5 };
-        line(p.x + 7.5 * d, p.y - 4, p.x, p.y);
-      }
+      line(x - 8.5 * d, y + 23.5, x - 16 * d, y + 27.5);
       // front leg
       strokeWeight(6);
       p = { x: x + 10 * d, y: y + 38 };
@@ -132,18 +117,11 @@ class Sprite {
     else {
       // back arm
       stroke(this.pcol);
-      strokeWeight(4.25);
-      if (Sprite.withElbow) {
-        p = { x: x - 12 * d, y: y + 25 };
-        line(p.x + 6 * d, p.y - 2, p.x, p.y);
-        line(p.x, p.y, p.x + 0 * d, p.y + 3);
-      } else {
-        p = { x: x - 13 * d, y: y + 27.5 };
-        line(p.x + 6 * d, p.y - 4, p.x, p.y);
-      }
+      strokeWeight(4.5);
+      line(x - 7 * d, y + 24, x - 12 * d, y + 27.5);
       // back leg
       strokeWeight(5.5);
-      p = { x: x + 12 * d, y: y + 38 };
+      p = { x: x + 10 * d, y: y + 38 };
       line(p.x - 6 * d, p.y - 7, p.x, p.y);
       line(p.x, p.y, p.x + 4 * d, p.y - 2);
       // front leg
@@ -157,6 +135,7 @@ class Sprite {
     noStroke();
     fill(this.col);
     square(x + 2 * d, y + 22, 22, 5);
+    // 手前脚が前
     if (this.state) {
       // bell
       fill(this.dcol);
@@ -164,7 +143,9 @@ class Sprite {
       noStroke();
       fill("gold");
       circle(x + 10 * d, y + 23, 5);
-    } else {
+    }
+    // 手前脚が後
+    else {
       // bell
       fill(this.dcol);
       ellipse(x + 6 * d, y + 20, 14, 5);
@@ -174,14 +155,7 @@ class Sprite {
       // front arm
       strokeWeight(5);
       stroke(this.col);
-      if (Sprite.withElbow) {
-        p = { x: x + 15 * d, y: y + 28 };
-        line(p.x - 8 * d, p.y - 2, p.x, p.y);
-        line(p.x, p.y, p.x + 3 * d, p.y - 4);
-      } else {
-        p = { x: x + 16 * d, y: y + 27.5 };
-        line(p.x - 16 * d, p.y - 4, p.x, p.y);
-      }
+      line(x, y + 23.5, x + 16 * d, y + 27.5);
     }
   }
 
@@ -196,25 +170,25 @@ class Sprite {
     ellipse(x, y, 60, 44);
     // eyes
     fill(0);
-    circle(x, y - 3, 6);
-    circle(x + 22 * d, y - 3, 5.75);
+    circle(x, y, 6);
+    circle(x + 22 * d, y, 5.75);
     // ear
     fill(this.dcol);
     triangle(x, y - 18, x - 22 * d, y - 12, x - 12 * d, y - 32);
     // nose
-    triangle(x + 12 * d, y + 4, x + 20 * d, y + 4, x + 16 * d, y + 7);
+    triangle(x + 12 * d, y + 6, x + 20 * d, y + 6, x + 16 * d, y + 9);
     // whiskers
     strokeWeight(1);
     stroke(this.dcol);
-    line(x - 12 * d, y + 4, x - 18 * d, y + 4);
-    line(x - 12 * d, y + 1, x - 18 * d, y + 1);
-    line(x + 32 * d, y + 4, x + 30 * d, y + 4);
-    line(x + 32 * d, y + 1, x + 30 * d, y + 1);
+    line(x - 12 * d, y + 6, x - 18 * d, y + 6);
+    line(x - 12 * d, y + 3, x - 18 * d, y + 3);
+    line(x + 31 * d, y + 6, x + 29 * d, y + 6);
+    line(x + 31 * d, y + 3, x + 30 * d, y + 3);
     // mouth
     if (saying) {
       fill("crimson");
       noStroke();
-      ellipse(x + 15 * d, y + 12, 4, 5);
+      ellipse(x + 14 * d, y + 14, 4, 5);
     }
   }
 
@@ -222,47 +196,76 @@ class Sprite {
   drawBodyV(x, y, dy) {
     let p = { x: x, y: y };
     let dx = this.state ? 1 : -1;
-    // front leg
-    stroke(this.col);
-    strokeWeight(6);
-    p = { x: x - 8 * dx, y: y + 39 * dy };
-    line(p.x + 2 * dx, p.y - 8 * dy, p.x, p.y);
-    line(p.x, p.y, p.x - 4 * dx, p.y - 2 * dy);
-    // back leg
-    stroke(this.pcol);
-    strokeWeight(5.5);
-    p = { x: x + 12 * dx, y: y + 36 * dy };
-    line(p.x - 6 * dx, p.y - 3 * dy, p.x - 2 * dx, p.y);
-    // front arm
-    strokeWeight(5);
-    stroke(this.col);
-    if (Sprite.withElbow) {
-      p = { x: x + 15 * dx, y: y + 28 * dy };
-      line(p.x - 8 * dx, p.y - 2 * dy, p.x, p.y);
-      line(p.x, p.y, p.x + 3 * dx, p.y - 4 * dy);
-    } else {
-      line(x + 6 * dx, y + 20 * dy, x + 18 * dx, y + 30 * dy);
+
+    // 下向き
+    if (dy > 0) {
+      // front leg
+      stroke(this.col);
+      strokeWeight(6);
+      p = { x: x - 8 * dx, y: y + 39 };
+      line(p.x + 2 * dx, p.y - 8, p.x, p.y);
+      line(p.x, p.y, p.x - 4 * dx, p.y - 2);
+      // back leg
+      stroke(this.pcol);
+      strokeWeight(5.5);
+      p = { x: x + 12 * dx, y: y + 36 };
+      line(x + 6 * dx, y + 33, x + 10 * dx, y + 36);
+      // front arm
+      strokeWeight(5);
+      stroke(this.col);
+      line(x + 6 * dx, y + 20, x + 17 * dx, y + 28.5);
+      // back arm
+      strokeWeight(4.5);
+      stroke(this.pcol);
+      line(x - 4 * dx, y + 18, x - 14 * dx, y + 26);
+      // body
+      noStroke();
+      fill(this.col);
+      square(x, y + 22, 22, 5);
+      // bell
+      fill(this.dcol);
+      ellipse(x, y + 20, 20, 7);
+      noStroke();
+      fill("gold");
+      circle(x, y + 23, 5);
     }
-    // back arm
-    strokeWeight(4.25);
-    stroke(this.pcol);
-    if (Sprite.withElbow) {
-      p = { x: x + 15 * dx, y: y + 28 * dy };
-      line(p.x - 8 * dx, p.y - 2 * dy, p.x, p.y);
-      line(p.x, p.y, p.x + 3 * dx, p.y - 4 * dy);
-    } else {
-      line(x - 4 * dx, y + 18 * dy, x - 14 * dx, y + 26 * dy);
+    // 上向き
+    else {
+      // front leg
+      stroke(this.col);
+      strokeWeight(6);
+      p = { x: x - 6 * dx, y: y + 39 };
+      line(p.x, p.y - 8, p.x, p.y);
+      line(p.x, p.y, p.x - 3 * dx, p.y - 2);
+      // back leg
+      stroke(this.pcol);
+      strokeWeight(5.5);
+      p = { x: x + 6 * dx, y: y + 35 };
+      line(p.x, p.y - 6, p.x, p.y);
+      line(p.x, p.y, p.x + 3 * dx, p.y - 2);
+      // front arm
+      strokeWeight(5);
+      stroke(this.col);
+      line(x + 6 * dx, y + 20, x + 17 * dx, y + 28.5);
+      // back arm
+      strokeWeight(4.5);
+      stroke(this.pcol);
+      line(x - 4 * dx, y + 18, x - 14 * dx, y + 26);
+      // body
+      noStroke();
+      fill(this.col);
+      square(x, y + 22, 22, 5);
+      // belt
+      fill(this.dcol);
+      ellipse(x, y + 20, 20, 7);
+      // tail
+      strokeWeight(2.5);
+      stroke(this.dcol);
+      const d = this.state ? 1 : -1;
+      p = { x: x, y: y + 38 };
+      line(p.x, p.y - 7, p.x, p.y);
+      line(p.x, p.y, p.x + 4 * d, p.y + 3);
     }
-    // body
-    noStroke();
-    fill(this.col);
-    square(x, y + 22 * dy, 22, 5);
-    // bell
-    fill(this.dcol);
-    ellipse(x, y + 20 * dy, 20, 7);
-    noStroke();
-    fill("gold");
-    circle(x, y + 23 * dy, 5);
   }
 
   /** 上下向きの頭部 */
@@ -271,28 +274,61 @@ class Sprite {
     noStroke();
     fill(this.col);
     ellipse(x, y, 60, 44);
-    // eyes
-    fill(0);
-    circle(x - 12, y + 6 * d, 6);
-    circle(x + 12, y + 6 * d, 6);
-    // ears
-    fill(this.dcol);
-    triangle(x - 6, y - 10 * d, x - 26, y - 6 * d, x - 18, y - 26 * d);
-    triangle(x + 6, y - 10 * d, x + 26, y - 6 * d, x + 18, y - 26 * d);
-    // nose
-    triangle(x + 4, y + 13 * d, x - 4, y + 13 * d, x, y + 16 * d);
-    // whiskers
-    strokeWeight(1);
-    stroke(this.dcol);
-    line(x - 22, y + 10 * d, x - 28, y + 10 * d);
-    line(x - 22, y + 13 * d, x - 28, y + 13 * d);
-    line(x + 22, y + 10 * d, x + 28, y + 10 * d);
-    line(x + 22, y + 13 * d, x + 28, y + 13 * d);
-    // mouth
-    if (saying) {
-      fill("crimson");
-      noStroke();
-      ellipse(x, y + 20 * d, 4, 4);
+    if (Sprite.withBody) {
+      if (d < 0) {
+        // ears
+        fill(this.dcol);
+        triangle(x - 6, y - 14, x - 26, y - 7, x - 22, y - 28);
+        triangle(x + 6, y - 14, x + 26, y - 7, x + 22, y - 28);
+      } else {
+        // eyes
+        fill(0);
+        circle(x - 12, y, 6);
+        circle(x + 12, y, 6);
+        // ears
+        fill(this.dcol);
+        triangle(x - 6, y - 18, x - 26, y - 11, x - 22, y - 30);
+        triangle(x + 6, y - 18, x + 26, y - 11, x + 22, y - 30);
+        // nose
+        triangle(x + 4, y + 6, x - 4, y + 6, x, y + 9);
+        // whiskers
+        strokeWeight(1);
+        stroke(this.dcol);
+        line(x - 24, y + 6, x - 30, y + 6);
+        line(x - 24, y + 3, x - 30, y + 3);
+        line(x + 24, y + 6, x + 30, y + 6);
+        line(x + 24, y + 3, x + 30, y + 3);
+        // mouth
+        if (saying) {
+          fill("crimson");
+          noStroke();
+          ellipse(x, y + 15, 4, 5);
+        }
+      }
+    } else {
+      // eyes
+      fill(0);
+      circle(x - 12, y + 6 * d, 6);
+      circle(x + 12, y + 6 * d, 6);
+      // ears
+      fill(this.dcol);
+      triangle(x - 6, y - 10 * d, x - 26, y - 6 * d, x - 18, y - 26 * d);
+      triangle(x + 6, y - 10 * d, x + 26, y - 6 * d, x + 18, y - 26 * d);
+      // nose
+      triangle(x + 4, y + 13 * d, x - 4, y + 13 * d, x, y + 16 * d);
+      // whiskers
+      strokeWeight(1);
+      stroke(this.dcol);
+      line(x - 22, y + 10 * d, x - 28, y + 10 * d);
+      line(x - 22, y + 13 * d, x - 28, y + 13 * d);
+      line(x + 22, y + 10 * d, x + 28, y + 10 * d);
+      line(x + 22, y + 13 * d, x + 28, y + 13 * d);
+      // mouth
+      if (saying) {
+        fill("crimson");
+        noStroke();
+        ellipse(x, y + 20 * d, 4, 4);
+      }
     }
   }
 
@@ -367,6 +403,7 @@ class Sprite {
   setColor(col = "coral") {
     this.col = col;
     this.dcol = this.getDarkColor(col);
+    this.pcol = this.getPaleColor(col);
     this.draw(true);
   }
 
@@ -379,9 +416,9 @@ class Sprite {
   }
 
   /** ツール（後ろの手足の色） */
-  getPaleColor(col, s = 0.5) {
+  getPaleColor(col, s = 0.75) {
     colorMode(HSL, 360, 100, 100);
-    const pcol = color(hue(col), saturation(col) * s, lightness(col));
+    const pcol = color(hue(col), saturation(col) * s, lightness(col) * 0.9);
     colorMode(RGB);
     return pcol;
   }

@@ -389,11 +389,7 @@ class Sprite {
     if (this.dir.x) {
       text(msg, this.x + 2 * this.dir.x, this.y - 42);
     } else {
-      if (this.dir.y > 0) {
-        text(msg, this.x, this.y - 36);
-      } else {
-        text(msg, this.x, this.y + 54);
-      }
+      text(msg, this.x, this.y - 42);
     }
     stroke(0);
     fill(255);

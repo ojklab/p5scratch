@@ -4,19 +4,20 @@
 function setup() {
   // Sprite.flushScreen = false;
   // Sprite.withBody = false;
-  start();
+  createCanvas(480, 360);
+  start(100, 200);
 }
 
 async function draw() {
-  await sleep(1);
-  walk(50);
-  await sleep(0.5);
-  walk(50);
-  await sleep(0.5);
-  walk(50);
-  await sleep(0.5);
-  walk(50);
-  await sleep(0.5);
+  const dir = ["上", "左", "下", "右"];
+
+  for (let i = 0; i < 12; i += 1) {
+    for (let j = 0; j < 10; j += 1) {
+      walk(10);
+      await sleep(0.5);
+    }
+    turn(dir[i % 4]);
+  }
 }
 
 function mousePressed() {

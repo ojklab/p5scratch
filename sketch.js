@@ -1,43 +1,22 @@
 /*jshint esversion: 8 */
 // noprotect
 
-async function setup() {
-  Sprite.flushScreen = false;
+function setup() {
+  // Sprite.flushScreen = false;
   // Sprite.withBody = false;
-  start(200, 0, true);
+  start();
+}
 
-  turn("下");
-  walk(100);
-  walk(80);
-  setXY(280, 360);
-  turn("上");
-  walk(100);
-  walk(80);
-  setXY(120, 180);
-  walk(80);
-  setXY(360, 180);
-  walk(80);
-
-  return;
-  // await sleep(1);
-
-  turn("下");
-  setXY(170, 30);
-  setXY(170, 35);
-  setXY(170, 180);
-  setXY(100, 30);
-  setXY(100, 35);
-  setXY(100, 180);
-  say("Hello");
-  setXY(310, 330);
-  setXY(310, 335);
-  setXY(310, 180);
-  setXY(380, 330);
-  setXY(380, 335);
-  setXY(380, 180);
-  say("Hello");
-
-  // ここから下にコードを書いていきます
+async function draw() {
+  await sleep(1);
+  walk(50);
+  await sleep(0.5);
+  walk(50);
+  await sleep(0.5);
+  walk(50);
+  await sleep(0.5);
+  walk(50);
+  await sleep(0.5);
 }
 
 function mousePressed() {

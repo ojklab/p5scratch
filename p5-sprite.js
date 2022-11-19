@@ -25,6 +25,9 @@ p5.prototype.start = (x = 100, y = 200, margin = false) => {
 
   // スプライトの生成
   p5nyan = new Sprite(x, y);
+
+  // ループを止める
+  noLoop();
 };
 
 /** スプライト（ピゴニャン） */

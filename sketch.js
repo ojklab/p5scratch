@@ -1,16 +1,16 @@
 /*jshint esversion: 8 */
 // noprotect
 
-async function setup() {
+function setup() {
   // Sprite.flushScreen = false;
-  // Sprite.withBody = false;
   createCanvas(480, 360);
   start(100, 200);
-  await sleep(1);
 }
 
 async function draw() {
   const dir = ["上", "左", "下", "右"];
+  say("動きます");
+  await sleep(1);
 
   for (let i = 0; i < 12; i += 1) {
     for (let j = 0; j < 10; j += 1) {

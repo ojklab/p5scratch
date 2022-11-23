@@ -13,7 +13,7 @@ p5.prototype.start = (x = width / 2, y = height / 2, margin_y = 0, margin_x = 0)
   if (margin_y) {
     document.querySelector("canvas").style.marginTop = margin_y + "px";
   }
-  // document.addEventListener('contextmenu', (e) => e.preventDefault());
+  document.addEventListener("contextmenu", (e) => e.preventDefault());
 
   // 描画の装飾
   background(255);

@@ -1,11 +1,12 @@
 /*jshint esversion: 8 */
 // noprotect
 
-function setup() {
+async function setup() {
   // Sprite.flushScreen = false;
   // Sprite.withBody = false;
   createCanvas(480, 360);
   start(100, 200);
+  await sleep(1);
 }
 
 async function draw() {

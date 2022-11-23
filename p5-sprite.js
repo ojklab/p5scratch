@@ -2,13 +2,16 @@
 
 let p5nyan;
 
-p5.prototype.start = (x = width / 2, y = height / 2, margin = false) => {
+p5.prototype.start = (x = width / 2, y = height / 2, margin_y = 0, margin_x = 0) => {
   if (p5nyan) return;
 
   // キャンバスの設定
   document.querySelector("canvas").style.border = "solid 1px gray";
-  if (margin) {
-    document.querySelector("canvas").style.margin = "50px";
+  if (margin_x) {
+    document.querySelector("canvas").style.marginTop = margin_x + "px";
+  }
+  if (margin_y) {
+    document.querySelector("canvas").style.marginTop = margin_y + "px";
   }
   // document.addEventListener('contextmenu', (e) => e.preventDefault());
 

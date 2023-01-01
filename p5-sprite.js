@@ -40,7 +40,7 @@ class Sprite {
 
   constructor(x, y) {
     this.x = x;
-    this.y = y;
+    this.y = Sprite.withBody ? y - 14 : y;
     this.dir = { x: 1, y: 0 };
     this.col = "coral";
     this.dcol = this.getDarkColor(this.col);
@@ -431,6 +431,7 @@ class Sprite {
   /** 座標で指定 */
   setXY(x, y) {
     if (!isFinite(x) || !isFinite(y)) return;
+    if (Sprite.withBody) y -= 14;
     const keepState = this.x == x && this.y == y;
 
     if (this.keepH || abs(this.x - x) >= abs(this.y - y)) {
@@ -446,7 +447,8 @@ class Sprite {
   }
 
   getXY() {
-    return [this.x, this.y];
+    const y = Sprite.withBody ? this.y + 14 : this.y;
+    return [this.x, y];
   }
 
   setX(x) {
@@ -466,6 +468,7 @@ class Sprite {
 
   setY(y) {
     if (!isFinite(y)) return;
+    if (Sprite.withBody) y -= 14;
     const keepState = this.y == y;
     if (this.dir.x) {
       this.dir.x = 0;
@@ -476,7 +479,8 @@ class Sprite {
   }
 
   getY() {
-    return this.y;
+    const y = Sprite.withBody ? this.y + 14 : this.y;
+    return y;
   }
 
   keepHorizontal(flag) {
@@ -487,7 +491,6 @@ class Sprite {
 
   putFish(x, y, col = "skyblue") {
     if (!isFinite(x) || !isFinite(y)) return;
-
     this.fishList.push({ x: x, y: y, col: col });
     this.draw(true);
   }
@@ -526,11 +529,11 @@ class Sprite {
       const fx = fish.x;
       const fy = fish.y;
       if (Sprite.withBody) {
-        if (fx < this.x + 45 && fx > this.x - 52 && fy < this.y + 48 && fy > this.y - 27) {
+        if (fx < this.x + 45 && fx > this.x - 52 && fy < this.y + 48 && fy > this.y - 35) {
           return false;
         }
       } else {
-        if (fx < this.x + 45 && fx > this.x - 52 && fy < this.y + 33 && fy > this.y - 33) {
+        if (fx < this.x + 45 && fx > this.x - 52 && fy < this.y + 30 && fy > this.y - 35) {
           return false;
         }
       }

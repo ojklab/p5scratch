@@ -551,6 +551,16 @@ p5.prototype.sleep = (sec) => {
   });
 };
 
+p5.prototype.randomInt = (min, max) => {
+  if (min >= max) {
+    let temp = min;
+    max = min;
+    min = temp;
+  }
+
+  return floor(random(min, max + 1));
+};
+
 p5.prototype.walk = (steps) => {
   p5nyan.walk(steps);
 };

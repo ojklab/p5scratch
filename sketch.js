@@ -3,13 +3,16 @@
 
 function setup() {
   // Sprite.flushScreen = false;
+  // Sprite.withBody = false;
   createCanvas(480, 360);
   start(100, 200);
 }
 
 async function draw() {
   const dir = ["上", "左", "下", "右"];
+  say("動きます");
   await sleep(1);
+  turn("下");
 
   for (let i = 0; i < 10; i += 1) {
     walk(20);
@@ -25,8 +28,11 @@ async function draw() {
       walk(10);
       await sleep(0.5);
     }
-    turn(dir[i % 4]);
+    walk(5);
+    await sleep(0.5);
   }
+
+  say("hello");
 }
 
 function mousePressed() {

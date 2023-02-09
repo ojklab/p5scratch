@@ -387,6 +387,9 @@ class Sprite {
 
   /** しゃべる */
   say(msg) {
+    if (msg === 0) {
+      msg = "0";
+    }
     if (!msg) return;
     this.draw(true, true);
     fill(0);

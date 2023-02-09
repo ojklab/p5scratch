@@ -9,9 +9,17 @@ function setup() {
 
 async function draw() {
   const dir = ["上", "左", "下", "右"];
-  say("動きます");
   await sleep(1);
 
+  for (let i = 0; i < 10; i += 1) {
+    walk(20);
+    say(i);
+    await sleep(0.5);
+  }
+
+  say(i); // エラー
+
+  return;
   for (let i = 0; i < 12; i += 1) {
     for (let j = 0; j < 10; j += 1) {
       walk(10);

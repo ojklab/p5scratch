@@ -9,18 +9,18 @@ function setup() {
 }
 
 async function draw() {
-  const dir = ["上", "左", "下", "右"];
+  const dir = [0, 270, 180, 90];
   say("動きます");
   await sleep(1);
-  turn("下");
 
-  for (let i = 0; i < 10; i += 1) {
-    walk(20);
-    say(i);
-    await sleep(0.5);
+  for (const d of dir) {
+    for (let i = 0; i < 3; i += 1) {
+      walk(20);
+      say(i);
+      await sleep(0.5);
+    }
+    turn(d);
   }
-
-  say(i); // エラー
 
   return;
   for (let i = 0; i < 12; i += 1) {

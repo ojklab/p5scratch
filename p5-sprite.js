@@ -347,18 +347,23 @@ class Sprite {
   turn(dir) {
     switch (dir) {
       case "上":
+      case 0:
         this.dir.x = 0;
         this.dir.y = -1;
         break;
       case "下":
+      case 180:
         this.dir.x = 0;
         this.dir.y = 1;
         break;
       case "右":
+      case 90:
         this.dir.x = 1;
         this.dir.y = 0;
         break;
       case "左":
+      case -90:
+      case 270:
         this.dir.x = -1;
         this.dir.y = 0;
         break;

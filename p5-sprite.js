@@ -409,7 +409,7 @@ class Sprite {
   /** 色を変更 */
   setColor(col = "coral") {
     if (col === "random") {
-      col = randomColor();
+      col = this.randomColor();
     }
     this.col = col;
     this.dcol = this.getDarkColor(col);
@@ -511,7 +511,7 @@ class Sprite {
   putFish(x, y, col = "skyblue") {
     if (!isFinite(x) || !isFinite(y)) return;
     if (col === "random") {
-      col = randomColor();
+      col = this.randomColor();
     }
     this.fishList.push({ x: x, y: y, col: col });
     this.draw(true);
@@ -636,6 +636,10 @@ p5.prototype.putFish = (x, y, col) => {
 
 p5.prototype.moveFish = (step) => {
   return p5nyan.moveFish(step);
+};
+
+p5.prototype.randomColor = () => {
+  return p5nyan.randomColor(p5nyan.col);
 };
 
 /** ピゴニャン用のツール関数 */

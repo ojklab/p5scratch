@@ -409,15 +409,22 @@ class Sprite {
   /** 色を変更 */
   setColor(col = "coral") {
     if (col === "random") {
-      do {
-        col = random(["silver", "skyblue", "gold", "lightgreen", "plum", "lightpink", "coral"]);
-      } while (col !== this.col);
+      col = randomColor();
     }
-
     this.col = col;
     this.dcol = this.getDarkColor(col);
     this.pcol = this.getPaleColor(col);
     this.draw(true);
+  }
+
+  /** ツール（色のランダム選択） */
+  randomColor() {
+    const list = ["coral", "silver", "skyblue", "gold", "lightgreen", "plum", "lightpink"];
+    let col;
+    do {
+      col = random(list);
+    } while (col !== this.col);
+    return col;
   }
 
   /** ツール（耳・鼻・しっぽの色） */
@@ -503,6 +510,9 @@ class Sprite {
 
   putFish(x, y, col = "skyblue") {
     if (!isFinite(x) || !isFinite(y)) return;
+    if (col === "random") {
+      col = randomColor();
+    }
     this.fishList.push({ x: x, y: y, col: col });
     this.draw(true);
   }

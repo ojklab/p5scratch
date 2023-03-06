@@ -408,6 +408,12 @@ class Sprite {
 
   /** 色を変更 */
   setColor(col = "coral") {
+    if (col === "random") {
+      do {
+        col = random(["silver", "skyblue", "gold", "lightgreen", "plum", "lightpink", "coral"]);
+      } while (col !== this.col);
+    }
+
     this.col = col;
     this.dcol = this.getDarkColor(col);
     this.pcol = this.getPaleColor(col);
@@ -548,24 +554,7 @@ class Sprite {
   }
 }
 
-/* メソッドを直接呼び出せるように */
-
-p5.prototype.sleep = (sec) => {
-  if (sec < 0) return;
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(), sec * 1000);
-  });
-};
-
-p5.prototype.randomInt = (min, max) => {
-  if (min >= max) {
-    let temp = min;
-    max = min;
-    min = temp;
-  }
-
-  return floor(random(min, max + 1));
-};
+/** startメソッドで生成したピゴニャンのメソッドを直接呼び出す */
 
 p5.prototype.walk = (steps) => {
   p5nyan.walk(steps);
@@ -637,4 +626,23 @@ p5.prototype.putFish = (x, y, col) => {
 
 p5.prototype.moveFish = (step) => {
   return p5nyan.moveFish(step);
+};
+
+/** ピゴニャン用のツール関数 */
+
+p5.prototype.sleep = (sec) => {
+  if (sec < 0) return;
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), sec * 1000);
+  });
+};
+
+p5.prototype.randomInt = (min, max) => {
+  if (min >= max) {
+    let temp = min;
+    max = min;
+    min = temp;
+  }
+
+  return floor(random(min, max + 1));
 };

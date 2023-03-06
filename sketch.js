@@ -1,62 +1,38 @@
-/*jshint esversion: 8 */
+/* jshint esversion: 8 */
 // noprotect
 
 function setup() {
-  // Sprite.flushScreen = false;
-  // Sprite.withBody = false;
-  createCanvas(480, 360);
-  start(100, 200);
+  createCanvas(480, 360); // キャンバスを描画
+  start(100, 200); // ピゴニャンを呼び出す
 }
 
 async function draw() {
-  const dir = [0, 270, 180, 90];
-  say("動きます");
   await sleep(1);
 
-  for (const d of dir) {
-    for (let i = 0; i < 3; i += 1) {
-      walk(20);
-      say(i);
-      await sleep(0.5);
-    }
-    turn(d);
-  }
-
-  return;
-  for (let i = 0; i < 12; i += 1) {
-    for (let j = 0; j < 10; j += 1) {
-      walk(10);
-      await sleep(0.5);
-    }
-    walk(5);
+  for (let i = 0; i < 20; i += 1) {
+    walk(20);
     await sleep(0.5);
   }
 
-  say("hello");
-}
+  /*
+  while (true) {
+    for (let i = 0; i < 30; i += 1) {
+      walk(15);
+      await sleep(0.5);
 
-function mousePressed() {
-  const col = color(random(100, 255), random(100, 255), random(100, 255));
-  putFish(mouseX, mouseY, col);
-}
-
-function keyPressed() {
-  const x = getX();
-  const y = getY();
-  const step = 30;
-  if (keyCode === LEFT_ARROW) {
-    // turn('左');
-    // walk(10);
-    setX(x - step);
-  } else if (keyCode === RIGHT_ARROW) {
-    setX(x + step);
-  } else if (keyCode === UP_ARROW) {
-    setY(y - step);
-  } else if (keyCode === DOWN_ARROW) {
-    setY(y + step);
-  } else if (keyCode === SHIFT) {
-    moveFish();
-  } else if (key === "s") {
-    say("こんにちは");
+      // マウスボタンが押されたら…
+      if (mouseIsPressed == true) {
+        setX(width / 2); // 水平中央に移動
+        setColor("random"); // 色をランダムに変更
+        break; // ループから抜ける
+      }
+    }
   }
+  */
+}
+
+function mouseClicked() {
+  // setX(width / 2);
+  // setColor("random");
+  putFish(mouseX, mouseY, "random");
 }

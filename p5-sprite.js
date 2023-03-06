@@ -423,7 +423,7 @@ class Sprite {
     let col;
     do {
       col = random(list);
-    } while (col !== this.col);
+    } while (col === this.col);
     return col;
   }
 

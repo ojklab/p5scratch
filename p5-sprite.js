@@ -33,9 +33,6 @@ p5.prototype.setupSprite = (x = width / 2, y = height / 2, margin_y = 0, margin_
 
   // その他の設定
   frameRate(30);
-  textAlign(CENTER, CENTER);
-  rectMode(CENTER);
-  strokeCap(ROUND);
 };
 
 /** スプライト（ピゴニャン） */
@@ -62,13 +59,17 @@ class Sprite {
   draw(keepState = false) {
     if (Sprite.flushScreen) background(255);
 
-    // 魚関係
+    // 魚
     let eaten = this.eatFish();
     this.drawFish();
 
     // 歩き状態を更新
     this.state = keepState ? this.state : !this.state;
 
+    // ピゴニャン
+    push();
+    rectMode(CENTER);
+    strokeCap(ROUND);
     // 左右向き
     if (this.dir.x) {
       if (Sprite.withBody) {
@@ -85,16 +86,12 @@ class Sprite {
         this.drawHeadV(this.x, this.y, this.dir.y);
       }
     }
+    pop();
 
     // しゃべる
     if (this.serif) {
       this.drawMessage();
     }
-
-    // 色設定を初期化（stroke(0) やstroke("black") だと何故か無効になる）
-    strokeWeight(1);
-    stroke(0);
-    fill(255);
 
     return eaten;
   }
@@ -348,6 +345,7 @@ class Sprite {
     }
   }
 
+  /** 動く */
   move(steps) {
     if (!isFinite(steps)) return;
     this.x += this.dir.x * steps;
@@ -355,6 +353,7 @@ class Sprite {
     return this.draw();
   }
 
+  /** 〜に向ける */
   turn(dir) {
     switch (dir) {
       case "上":
@@ -389,7 +388,7 @@ class Sprite {
     }
   }
 
-  /** 方向転換 */
+  /** 方向反転 */
   turnBack() {
     if (this.dir.x) {
       this.dir.x *= -1;
@@ -409,10 +408,13 @@ class Sprite {
     } else {
       this.serif = serif;
     }
+    this.draw();
   }
 
   /** しゃべる（描画） */
   drawMessage() {
+    push();
+    textAlign(CENTER, CENTER);
     fill(0);
     noStroke();
     if (this.dir.x) {
@@ -420,28 +422,10 @@ class Sprite {
     } else {
       text(this.serif, this.x, this.y - 42);
     }
-    stroke(0);
-    fill(255);
+    pop();
   }
 
-  /*
-  say(serif) {
-    if (serif === 0) serif = "0";
-    if (!serif) return;
-    this.draw(true, true);
-    fill(0);
-    noStroke();
-    if (this.dir.x) {
-      text(this.serif, this.x + 2 * this.dir.x, this.y - 42);
-    } else {
-      text(this.serif, this.x, this.y - 42);
-    }
-    stroke(0);
-    fill(255);
-  }
-  */
-
-  /** 色を変更 */
+  /** 色を変える */
   changeColor(col = "coral") {
     if (col === "random") {
       col = randomColor(this.col);
@@ -464,17 +448,19 @@ class Sprite {
 
   /** ツール（耳・鼻・しっぽの色） */
   getDarkColor(col, s = 0.5) {
+    push();
     colorMode(HSL, 360, 100, 100);
     const dcol = color(hue(col), saturation(col), lightness(col) * s);
-    colorMode(RGB);
+    pop();
     return dcol;
   }
 
   /** ツール（後ろの手足の色） */
   getPaleColor(col, s = 0.75) {
+    push();
     colorMode(HSL, 360, 100, 100);
     const pcol = color(hue(col), saturation(col) * s, lightness(col) * 0.9);
-    colorMode(RGB);
+    pop();
     return pcol;
   }
 
@@ -564,10 +550,10 @@ class Sprite {
     }
     if (sameFish === undefined) {
       // 新しい魚はリストに追加
-      this.fishList.push({ x: x, y: y, col: col });
+      this.fishList.push({ x: x, y: y, col: col, tailCol: this.getDarkColor(col) });
     } else {
       // 色違いは置きかえ
-      this.fishList.splice(sameFish, 1, { x: x, y: y, col: col });
+      this.fishList.splice(sameFish, 1, { x: x, y: y, col: col, tailCol: this.getDarkColor(col) });
     }
     return this.draw(true);
   }
@@ -576,21 +562,20 @@ class Sprite {
   drawFish() {
     if (!this.fishList) return;
     for (let fish of this.fishList) {
-      this.fish(fish.x, fish.y, fish.col);
+      this.fish(fish.x, fish.y, fish.col, fish.tailCol);
     }
   }
 
   /** 魚1匹の描画 */
-  fish(x, y, col) {
+  fish(x, y, col, tailCol) {
+    push();
     fill(col);
     noStroke();
     ellipse(x, y, 30, 15);
-    const tailCol = this.getDarkColor(col);
     fill(tailCol);
     circle(x - 5, y - 1, 4);
     triangle(x + 15, y, x + 22, y + 7, x + 22, y - 7);
-    fill(255);
-    stroke(0);
+    pop();
   }
 
   /** 魚を動かす */
@@ -604,23 +589,31 @@ class Sprite {
   }
 
   /**  魚が食べられたらリストから外す */
-  // 戻り値： 魚を食べたら true
+  // 戻り値： 食べた魚の座標と色／食べてなかったらfalse
   eatFish() {
     if (!this.fishList) return false;
+    let eaten = false;
     this.fishList = this.fishList.filter((fish) => {
       const fx = fish.x;
       const fy = fish.y;
       if (Sprite.withBody) {
         if (fx < this.x + 45 && fx > this.x - 52 && fy < this.y + 48 && fy > this.y - 35) {
+          eaten = fish;
           return false;
         }
       } else {
         if (fx < this.x + 45 && fx > this.x - 52 && fy < this.y + 30 && fy > this.y - 35) {
+          eaten = fish;
           return false;
         }
       }
       return true;
     });
+    if (eaten) {
+      return { x: eaten.x, y: eaten.y, col: eaten.col };
+    } else {
+      return false;
+    }
   }
 }
 

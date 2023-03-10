@@ -15,8 +15,8 @@ function setup() {
 
   frameRate(frame_rate); // フレームレート
   // loop(); // drawを再開
-  // turn("下");
-  turn("右");
+  turn("下");
+  // turn("右");
 }
 
 function draw() {

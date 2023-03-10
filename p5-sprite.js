@@ -39,7 +39,6 @@ p5.prototype.setupSprite = (x = width / 2, y = height / 2, margin_y = 0, margin_
 class Sprite {
   static flushScreen = true;
   static withBody = true;
-  static withElbow = false;
 
   constructor(x, y) {
     this.x = x;
@@ -227,8 +226,7 @@ class Sprite {
       // back leg
       stroke(this.pcol);
       strokeWeight(5.5);
-      p = { x: x + 12 * dx, y: y + 36 };
-      line(x + 6 * dx, y + 33, x + 10 * dx, y + 36);
+      line(x + 6 * dx, y + 33, x + 8 * dx, y + 36);
       // front arm
       strokeWeight(5);
       stroke(this.col);

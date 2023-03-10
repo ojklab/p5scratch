@@ -63,7 +63,7 @@ class Sprite {
     if (Sprite.flushScreen) background(255);
 
     // 魚関係
-    this.eatFish();
+    let eaten = this.eatFish();
     this.drawFish();
 
     // 歩き状態を更新
@@ -95,6 +95,8 @@ class Sprite {
     strokeWeight(1);
     stroke(0);
     fill(255);
+
+    return eaten;
   }
 
   /** 左右向きの胴体 */
@@ -350,7 +352,7 @@ class Sprite {
     if (!isFinite(steps)) return;
     this.x += this.dir.x * steps;
     this.y += this.dir.y * steps;
-    this.draw();
+    return this.draw();
   }
 
   turn(dir) {
@@ -495,7 +497,7 @@ class Sprite {
     }
     this.x = x;
     this.y = y;
-    this.draw(keepState);
+    return this.draw(keepState);
   }
 
   getXY() {
@@ -511,7 +513,7 @@ class Sprite {
     }
     this.dir.x = x >= this.x ? 1 : -1;
     this.x = x;
-    this.draw(keepState);
+    return this.draw(keepState);
   }
 
   getX() {
@@ -527,7 +529,7 @@ class Sprite {
     }
     this.dir.y = y >= this.y ? 1 : -1;
     this.y = y;
-    this.draw(keepState);
+    return this.draw(keepState);
   }
 
   getY() {
@@ -535,12 +537,14 @@ class Sprite {
     return y;
   }
 
+  // 身体の方向を左右向きに限定する
   keepHorizontal(flag) {
     this.keepH = flag;
   }
 
   /* 以下、魚の描画  */
 
+  /** 魚をリストに追加して描画する */
   putFish(x, y, col = "skyblue") {
     if (!isFinite(x) || !isFinite(y)) return;
     if (col === "random") {
@@ -553,18 +557,22 @@ class Sprite {
           sameFish = i;
           break;
         } else {
+          // 同じ位置で同色はリスト追加なし
           return;
         }
       }
     }
-    if (sameFish !== undefined) {
-      this.fishList.splice(sameFish, 1, { x: x, y: y, col: col });
-    } else {
+    if (sameFish === undefined) {
+      // 新しい魚はリストに追加
       this.fishList.push({ x: x, y: y, col: col });
+    } else {
+      // 色違いは置きかえ
+      this.fishList.splice(sameFish, 1, { x: x, y: y, col: col });
     }
-    this.draw(true);
+    return this.draw(true);
   }
 
+  /** 魚を描画する */
   drawFish() {
     if (!this.fishList) return;
     for (let fish of this.fishList) {
@@ -572,6 +580,7 @@ class Sprite {
     }
   }
 
+  /** 魚1匹の描画 */
   fish(x, y, col) {
     fill(col);
     noStroke();
@@ -584,17 +593,20 @@ class Sprite {
     stroke(0);
   }
 
+  /** 魚を動かす */
   moveFish(step = 10) {
     if (!this.fishList) return;
     for (let i = 0; i < this.fishList.length; i += 1) {
       this.fishList[i].x -= step;
       if (this.fishList[i].x < -11) this.fishList[i].x = 495;
     }
-    this.draw(true);
+    return this.draw(true);
   }
 
+  /**  魚が食べられたらリストから外す */
+  // 戻り値： 魚を食べたら true
   eatFish() {
-    if (!this.fishList) return;
+    if (!this.fishList) return false;
     this.fishList = this.fishList.filter((fish) => {
       const fx = fish.x;
       const fy = fish.y;
@@ -615,12 +627,12 @@ class Sprite {
 /** startメソッドで生成したピゴニャンのメソッドを直接呼び出す */
 
 p5.prototype.walk = (steps) => {
-  p5nyan.walk(steps);
+  return p5nyan.walk(steps);
 };
 
 // walkの別名
 p5.prototype.move = (steps) => {
-  p5nyan.walk(steps);
+  return p5nyan.walk(steps);
 };
 
 p5.prototype.say = (serif) => {
@@ -661,12 +673,12 @@ p5.prototype.getColor = () => {
 };
 
 p5.prototype.setXY = (x, y) => {
-  p5nyan.setXY(x, y);
+  return p5nyan.setXY(x, y);
 };
 
 // setXYの別名
 p5.prototype.goTo = (x, y) => {
-  p5nyan.setXY(x, y);
+  return p5nyan.setXY(x, y);
 };
 
 p5.prototype.getXY = () => {
@@ -674,7 +686,7 @@ p5.prototype.getXY = () => {
 };
 
 p5.prototype.setX = (x) => {
-  p5nyan.setX(x);
+  return p5nyan.setX(x);
 };
 
 p5.prototype.getX = () => {
@@ -682,7 +694,7 @@ p5.prototype.getX = () => {
 };
 
 p5.prototype.setY = (y) => {
-  p5nyan.setY(y);
+  return p5nyan.setY(y);
 };
 
 p5.prototype.getY = () => {

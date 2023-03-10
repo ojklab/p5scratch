@@ -98,24 +98,23 @@ class Sprite {
 
   /** 左右向きの胴体 */
   drawBodyH(x, y, d) {
-    // tail
-    strokeWeight(2.5);
-    stroke(this.dcol);
-    let p = { x: x - 15 * d, y: y + 35 };
-    line(p.x + 9 * d, p.y - 4, p.x, p.y);
-    line(p.x, p.y, p.x - 4 * d, p.y - 2);
-
     // 手前脚が前
     if (this.state) {
+      // tail
+      strokeWeight(2.5);
+      stroke(this.dcol);
+      let p = { x: x - 13 * d, y: y + 35 };
+      line(p.x + 10 * d, p.y - 5, p.x, p.y);
+      line(p.x, p.y, p.x - 5 * d, p.y);
       // back arm
       stroke(this.pcol);
       strokeWeight(4.5);
       line(x + 12 * d, y + 24.5, x + 17 * d, y + 27.5);
       // back leg
       strokeWeight(5.5);
-      p = { x: x - 7 * d, y: y + 39.5 };
-      line(p.x + 8 * d, p.y - 9, p.x, p.y);
-      line(p.x, p.y, p.x + 6 * d, p.y);
+      p = { x: x - 6 * d, y: y + 38 };
+      line(p.x + 9 * d, p.y - 9, p.x, p.y);
+      line(p.x, p.y, p.x + 5 * d, p.y + 2);
       // front arm
       stroke(this.col);
       strokeWeight(5);
@@ -128,21 +127,27 @@ class Sprite {
     }
     // 手前脚が後
     else {
+      // tail
+      strokeWeight(2.5);
+      stroke(this.dcol);
+      let p = { x: x - 15 * d, y: y + 35 };
+      line(p.x + 9 * d, p.y - 4, p.x, p.y);
+      line(p.x, p.y, p.x - 4 * d, p.y - 2);
       // back arm
       stroke(this.pcol);
       strokeWeight(4.5);
       line(x - 7 * d, y + 24, x - 12 * d, y + 27.5);
       // back leg
       strokeWeight(5.5);
-      p = { x: x + 10 * d, y: y + 38 };
-      line(p.x - 6 * d, p.y - 7, p.x, p.y);
-      line(p.x, p.y, p.x + 4 * d, p.y - 2);
+      p = { x: x + 9 * d, y: y + 38 };
+      line(p.x - 5 * d, p.y - 7, p.x, p.y);
+      line(p.x, p.y, p.x + 4 * d, p.y - 1);
       // front leg
       stroke(this.col);
       strokeWeight(6);
       p = { x: x - 8 * d, y: y + 39 };
       line(p.x + 4 * d, p.y - 8, p.x, p.y);
-      line(p.x, p.y, p.x + 6 * d, p.y);
+      line(p.x, p.y, p.x + 7 * d, p.y);
     }
     // body
     noStroke();
@@ -291,8 +296,8 @@ class Sprite {
       if (d < 0) {
         // ears
         fill(this.dcol);
-        triangle(x - 6, y - 14, x - 26, y - 7, x - 22, y - 28);
-        triangle(x + 6, y - 14, x + 26, y - 7, x + 22, y - 28);
+        triangle(x - 6, y - 14, x - 26, y - 7, x - 22, y - 27);
+        triangle(x + 6, y - 14, x + 26, y - 7, x + 22, y - 27);
       } else {
         // eyes
         fill(0);
@@ -300,8 +305,8 @@ class Sprite {
         circle(x + 12, y, 6);
         // ears
         fill(this.dcol);
-        triangle(x - 6, y - 18, x - 26, y - 11, x - 22, y - 30);
-        triangle(x + 6, y - 18, x + 26, y - 11, x + 22, y - 30);
+        triangle(x - 6, y - 18, x - 26, y - 11, x - 22, y - 29);
+        triangle(x + 6, y - 18, x + 26, y - 11, x + 22, y - 29);
         // nose
         triangle(x + 4, y + 6, x - 4, y + 6, x, y + 9);
         // whiskers

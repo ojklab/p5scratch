@@ -409,7 +409,7 @@ class Sprite {
   /** 色を変更 */
   setColor(col = "coral") {
     if (col === "random") {
-      col = this.randomColor();
+      col = randomColor(this.col);
     }
     this.col = col;
     this.dcol = this.getDarkColor(col);
@@ -417,13 +417,13 @@ class Sprite {
     this.draw(true);
   }
 
-  /** ツール（色のランダム選択） */
-  randomColor() {
+  /** ツール（ランダムに色を選ぶ） */
+  randomColor(cur_col) {
     const list = ["coral", "silver", "skyblue", "gold", "lightgreen", "plum", "lightpink"];
     let col;
     do {
       col = random(list);
-    } while (col === this.col);
+    } while (col === cur_col);
     return col;
   }
 
@@ -511,7 +511,7 @@ class Sprite {
   putFish(x, y, col = "skyblue") {
     if (!isFinite(x) || !isFinite(y)) return;
     if (col === "random") {
-      col = this.randomColor();
+      col = randomColor(this.col);
     }
     this.fishList.push({ x: x, y: y, col: col });
     this.draw(true);

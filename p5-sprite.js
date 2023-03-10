@@ -412,7 +412,7 @@ class Sprite {
     } else {
       this.serif = serif;
     }
-    this.draw();
+    this.draw(true);
   }
 
   /** しゃべる（描画） */

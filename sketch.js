@@ -4,18 +4,18 @@
 let fish_list = [];
 const n_fish = 10;
 const time_limit = 20;
-const frame_rate = 10;
+const frame_rate = 8r;
 let say_time = time_limit;
 let score = 0;
 
 function setup() {
-  Sprite.flushScreen = false;
+  // Sprite.flushScreen = false;
   createCanvas(480, 360); // キャンバスを描画
   start(100, 200); // ピゴニャンを呼び出す
 
   frameRate(frame_rate); // フレームレート
-  // loop(); // drawを再開
-  turn("下");
+  loop(); // drawを再開
+  // turn("下");
   // turn("右");
 }
 
@@ -37,7 +37,7 @@ function draw() {
   }
 
   // 歩かせる
-  let eaten = move(80);
+  let eaten = move(8);
 
   // 魚を食べたときの処理
   if (eaten != false) {
@@ -46,10 +46,7 @@ function draw() {
     score += 1;
     removeFish(eaten);
   } else {
-    if (sec > say_time) {
-      say("yes");
-      print("sec");
-    }
+    if (sec > say_time) say();
   }
 
   // 端まで行ったら切り返す

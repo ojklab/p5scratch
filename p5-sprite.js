@@ -54,12 +54,12 @@ class Sprite {
     this.state = false;
     this.keepH = false;
     this.fishList = [];
-    this.msg = undefined;
+    this.serif = undefined;
     this.draw();
   }
 
   /** 描画（ピゴニャンと魚） */
-  draw(keepState = false, saying = false) {
+  draw(keepState = false) {
     if (Sprite.flushScreen) background(255);
 
     // 魚関係
@@ -74,20 +74,20 @@ class Sprite {
       if (Sprite.withBody) {
         this.drawBodyH(this.x, this.y, this.dir.x);
       }
-      this.drawHeadH(this.x, this.y, this.dir.x, saying);
+      this.drawHeadH(this.x, this.y, this.dir.x);
     }
     // 上下向き
     else {
       if (Sprite.withBody) {
         this.drawBodyV(this.x, this.y, this.dir.y);
-        this.drawHeadV(this.x, this.y, this.dir.y, saying);
+        this.drawHeadV(this.x, this.y, this.dir.y);
       } else {
-        this.drawHeadV(this.x, this.y, this.dir.y, saying);
+        this.drawHeadV(this.x, this.y, this.dir.y);
       }
     }
 
     // しゃべる
-    if (this.msg) {
+    if (this.serif) {
       this.drawMessage();
     }
 
@@ -174,7 +174,7 @@ class Sprite {
   }
 
   /** 左右向きの頭部 */
-  drawHeadH(x, y, d, saying) {
+  drawHeadH(x, y, d) {
     // ear
     noStroke();
     fill(this.dcol);
@@ -199,7 +199,7 @@ class Sprite {
     line(x + 31 * d, y + 6, x + 29 * d, y + 6);
     line(x + 31 * d, y + 3, x + 30 * d, y + 3);
     // mouth
-    if (saying) {
+    if (this.serif) {
       fill("crimson");
       noStroke();
       ellipse(x + 14 * d, y + 14, 4, 5);
@@ -283,7 +283,7 @@ class Sprite {
   }
 
   /** 上下向きの頭部 */
-  drawHeadV(x, y, d, saying) {
+  drawHeadV(x, y, d) {
     // head
     noStroke();
     fill(this.col);
@@ -313,7 +313,7 @@ class Sprite {
         line(x + 24, y + 6, x + 30, y + 6);
         line(x + 24, y + 3, x + 30, y + 3);
         // mouth
-        if (saying) {
+        if (this.serif) {
           fill("crimson");
           noStroke();
           ellipse(x, y + 15, 4, 5);
@@ -338,7 +338,7 @@ class Sprite {
       line(x + 22, y + 10 * d, x + 28, y + 10 * d);
       line(x + 22, y + 13 * d, x + 28, y + 13 * d);
       // mouth
-      if (saying) {
+      if (this.serif) {
         fill("crimson");
         noStroke();
         ellipse(x, y + 20 * d, 4, 4);
@@ -400,12 +400,12 @@ class Sprite {
   }
 
   /** セリフを設定 */
-  say(msg = undefined) {
-    if (msg === 0) this.msg = "0";
-    if (msg === "") {
-      this.msg = undefined;
+  say(serif = undefined) {
+    if (serif === 0) this.serif = "0";
+    if (serif === "") {
+      this.serif = undefined;
     } else {
-      this.msg = msg;
+      this.serif = serif;
     }
   }
 
@@ -414,25 +414,25 @@ class Sprite {
     fill(0);
     noStroke();
     if (this.dir.x) {
-      text(this.msg, this.x + 2 * this.dir.x, this.y - 42);
+      text(this.serif, this.x + 2 * this.dir.x, this.y - 42);
     } else {
-      text(this.msg, this.x, this.y - 42);
+      text(this.serif, this.x, this.y - 42);
     }
     stroke(0);
     fill(255);
   }
 
   /*
-  say(msg) {
-    if (msg === 0) msg = "0";
-    if (!msg) return;
+  say(serif) {
+    if (serif === 0) serif = "0";
+    if (!serif) return;
     this.draw(true, true);
     fill(0);
     noStroke();
     if (this.dir.x) {
-      text(this.msg, this.x + 2 * this.dir.x, this.y - 42);
+      text(this.serif, this.x + 2 * this.dir.x, this.y - 42);
     } else {
-      text(this.msg, this.x, this.y - 42);
+      text(this.serif, this.x, this.y - 42);
     }
     stroke(0);
     fill(255);
@@ -623,12 +623,12 @@ p5.prototype.move = (steps) => {
   p5nyan.walk(steps);
 };
 
-p5.prototype.say = (msg) => {
-  p5nyan.say(msg);
+p5.prototype.say = (serif) => {
+  p5nyan.say(serif);
 };
 
-p5.prototype.sayFor = async (msg, sec) => {
-  p5nyan.say(msg);
+p5.prototype.sayFor = async (serif, sec) => {
+  p5nyan.say(serif);
   p5nyan.draw();
   await sleep(sec);
   p5nyan.say("");

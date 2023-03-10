@@ -1,38 +1,60 @@
-/* jshint esversion: 8 */
-// noprotect
-
 function setup() {
   createCanvas(480, 360); // キャンバスを描画
   start(100, 200); // ピゴニャンを呼び出す
+
+  // loop(); // drawを再開
+  frameRate(10);
 }
 
-async function draw() {
-  await sleep(1);
+let list = [];
 
-  for (let i = 0; i < 20; i += 1) {
-    walk(20);
-    await sleep(0.5);
+async function draw() {
+  // background(200);
+
+  await sayFor("aaa", 2);
+  walk(50);
+  await sleep(1);
+  turn("上");
+  await sleep(1);
+  walk(50);
+  await sayFor("bbb", 2);
+  walk(50);
+
+  if (list.length < 10) {
+    list.push({ x: width / 2, y: height / 2, col: randomColor() });
+    print(list);
   }
 
   /*
-  while (true) {
-    for (let i = 0; i < 30; i += 1) {
-      walk(15);
-      await sleep(0.5);
-
-      // マウスボタンが押されたら…
-      if (mouseIsPressed == true) {
-        setX(width / 2); // 水平中央に移動
-        setColor("random"); // 色をランダムに変更
-        break; // ループから抜ける
-      }
-    }
+    if (list.length < 10) {
+    list.push({
+      x: randomInt(0, width),
+      y: randomInt(0, height),
+      col: randomColor()
+    });
   }
   */
+
+  for (const fish of list) {
+    putFish(fish.x, fish.y, fish.col);
+  }
+
+  walk(10);
+  say(floor(frameCount / 10));
+
+  if (getY() > height || getY() < 0 || getX() < 0 || getX() > width) {
+    turnBack();
+  }
 }
 
-function mouseClicked() {
-  // setX(width / 2);
-  // setColor("random");
-  putFish(mouseX, mouseY, "random");
+function keyPressed() {
+  if (keyCode == UP_ARROW) {
+    turn("上");
+  } else if (keyCode == DOWN_ARROW) {
+    turn("下");
+  } else if (keyCode == RIGHT_ARROW) {
+    turn("右");
+  } else if (keyCode == LEFT_ARROW) {
+    turn("左");
+  }
 }

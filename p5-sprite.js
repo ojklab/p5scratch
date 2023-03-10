@@ -1,10 +1,22 @@
 "use strict";
 
-let p5nyan;
+let p5nyan; // start関数から始めるとき用
 
+/** ピゴニャンを1体しか使わないときの初期設定（上巻） */
 p5.prototype.start = (x = width / 2, y = height / 2, margin_y = 0, margin_x = 0) => {
-  if (p5nyan) return;
+  if (p5nyan) return; // 2体はつくらない
 
+  setupSprite();
+
+  // スプライトの生成
+  p5nyan = new Sprite(x, y);
+
+  // ループを止める
+  noLoop();
+};
+
+/** ピゴニャン用のp5.jsのセットアップ */
+p5.prototype.setupSprite = (x = width / 2, y = height / 2, margin_y = 0, margin_x = 0) => {
   // キャンバスの設定
   document.querySelector("canvas").style.border = "solid 1px gray";
   if (margin_x) {
@@ -24,12 +36,6 @@ p5.prototype.start = (x = width / 2, y = height / 2, margin_y = 0, margin_x = 0)
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   strokeCap(ROUND);
-
-  // スプライトの生成
-  p5nyan = new Sprite(x, y);
-
-  // ループを止める
-  noLoop();
 };
 
 /** スプライト（ピゴニャン） */
@@ -48,6 +54,7 @@ class Sprite {
     this.state = false;
     this.keepH = false;
     this.fishList = [];
+    this.msg = undefined;
     this.draw();
   }
 
@@ -61,9 +68,6 @@ class Sprite {
 
     // 歩き状態を更新
     this.state = keepState ? this.state : !this.state;
-
-    // stroke("black");
-    // circle(this.x, this.y + 10, 70);
 
     // 左右向き
     if (this.dir.x) {
@@ -80,6 +84,11 @@ class Sprite {
       } else {
         this.drawHeadV(this.x, this.y, this.dir.y, saying);
       }
+    }
+
+    // しゃべる
+    if (this.msg) {
+      this.drawMessage();
     }
 
     // 色設定を初期化（stroke(0) やstroke("black") だと何故か無効になる）
@@ -390,7 +399,30 @@ class Sprite {
     }
   }
 
-  /** しゃべる */
+  /** セリフを設定 */
+  say(msg = undefined) {
+    if (msg === 0) this.msg = "0";
+    if (msg === "") {
+      this.msg = undefined;
+    } else {
+      this.msg = msg;
+    }
+  }
+
+  /** しゃべる（描画） */
+  drawMessage() {
+    fill(0);
+    noStroke();
+    if (this.dir.x) {
+      text(this.msg, this.x + 2 * this.dir.x, this.y - 42);
+    } else {
+      text(this.msg, this.x, this.y - 42);
+    }
+    stroke(0);
+    fill(255);
+  }
+
+  /*
   say(msg) {
     if (msg === 0) msg = "0";
     if (!msg) return;
@@ -398,13 +430,14 @@ class Sprite {
     fill(0);
     noStroke();
     if (this.dir.x) {
-      text(msg, this.x + 2 * this.dir.x, this.y - 42);
+      text(this.msg, this.x + 2 * this.dir.x, this.y - 42);
     } else {
-      text(msg, this.x, this.y - 42);
+      text(this.msg, this.x, this.y - 42);
     }
     stroke(0);
     fill(255);
   }
+  */
 
   /** 色を変更 */
   setColor(col = "coral") {
@@ -513,7 +546,22 @@ class Sprite {
     if (col === "random") {
       col = randomColor(this.col);
     }
-    this.fishList.push({ x: x, y: y, col: col });
+    let sameFish = undefined;
+    for (let i = 0; i < this.fishList.length; i++) {
+      if (this.fishList[i].x == x && this.fishList[i].y == y) {
+        if (this.fishList[i].col != col) {
+          sameFish = i;
+          break;
+        } else {
+          return;
+        }
+      }
+    }
+    if (sameFish !== undefined) {
+      this.fishList.splice(sameFish, 1, { x: x, y: y, col: col });
+    } else {
+      this.fishList.push({ x: x, y: y, col: col });
+    }
     this.draw(true);
   }
 
@@ -570,11 +618,28 @@ p5.prototype.walk = (steps) => {
   p5nyan.walk(steps);
 };
 
+// walkの別名
+p5.prototype.move = (steps) => {
+  p5nyan.walk(steps);
+};
+
 p5.prototype.say = (msg) => {
   p5nyan.say(msg);
 };
 
+p5.prototype.sayFor = async (msg, sec) => {
+  p5nyan.say(msg);
+  p5nyan.draw();
+  await sleep(sec);
+  p5nyan.say("");
+};
+
 p5.prototype.turn = (dir) => {
+  p5nyan.turn(dir);
+};
+
+// turnの別名
+p5.prototype.pointInDirection = (dir) => {
   p5nyan.turn(dir);
 };
 
@@ -586,6 +651,11 @@ p5.prototype.setColor = (col) => {
   p5nyan.setColor(col);
 };
 
+// setColorの別名
+p5.prototype.changeColor = (col) => {
+  p5nyan.setColor(col);
+};
+
 p5.prototype.getColor = () => {
   return p5nyan.getColor();
 };
@@ -594,12 +664,13 @@ p5.prototype.setXY = (x, y) => {
   p5nyan.setXY(x, y);
 };
 
-p5.prototype.getXY = () => {
-  return p5nyan.getXY();
+// setXYの別名
+p5.prototype.goTo = (x, y) => {
+  p5nyan.setXY(x, y);
 };
 
-p5.prototype.moveToXY = (x, y) => {
-  p5nyan.setXY(x, y);
+p5.prototype.getXY = () => {
+  return p5nyan.getXY();
 };
 
 p5.prototype.setX = (x) => {
@@ -610,20 +681,12 @@ p5.prototype.getX = () => {
   return p5nyan.getX();
 };
 
-p5.prototype.moveToX = (x) => {
-  p5nyan.setX(x);
-};
-
 p5.prototype.setY = (y) => {
   p5nyan.setY(y);
 };
 
 p5.prototype.getY = () => {
   return p5nyan.getY();
-};
-
-p5.prototype.getXY = () => {
-  return p5nyan.getXY();
 };
 
 p5.prototype.keepHorizontal = (flag = true) => {
@@ -657,6 +720,5 @@ p5.prototype.randomInt = (min, max) => {
     max = min;
     min = temp;
   }
-
   return floor(random(min, max + 1));
 };

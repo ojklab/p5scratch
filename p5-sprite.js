@@ -64,6 +64,7 @@ class Sprite {
     this.drawFish();
 
     // 歩き状態を更新
+    console.log(keepState);
     this.state = keepState ? this.state : !this.state;
 
     // ピゴニャン
@@ -108,7 +109,7 @@ class Sprite {
       line(p.x, p.y, p.x - 5 * d, p.y);
       // back arm
       stroke(this.pcol);
-      strokeWeight(4.5);
+      strokeWeight(4.3);
       line(x + 12 * d, y + 24.5, x + 17 * d, y + 27.5);
       // back leg
       strokeWeight(5.5);
@@ -139,9 +140,9 @@ class Sprite {
       line(x - 7 * d, y + 24, x - 12 * d, y + 27.5);
       // back leg
       strokeWeight(5.5);
-      p = { x: x + 9 * d, y: y + 38 };
+      p = { x: x + 9 * d, y: y + 38.5 };
       line(p.x - 5 * d, p.y - 7, p.x, p.y);
-      line(p.x, p.y, p.x + 4 * d, p.y - 1);
+      line(p.x, p.y, p.x + 4 * d, p.y);
       // front leg
       stroke(this.col);
       strokeWeight(6);

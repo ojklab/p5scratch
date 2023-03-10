@@ -669,7 +669,7 @@ p5.prototype.changeColor = (col) => {
 };
 
 p5.prototype.getColor = () => {
-  return p5nyan.getColor();
+  p5nyan.getColor();
 };
 
 p5.prototype.setXY = (x, y) => {
@@ -682,7 +682,7 @@ p5.prototype.goTo = (x, y) => {
 };
 
 p5.prototype.getXY = () => {
-  return p5nyan.getXY();
+  p5nyan.getXY();
 };
 
 p5.prototype.setX = (x) => {
@@ -690,7 +690,7 @@ p5.prototype.setX = (x) => {
 };
 
 p5.prototype.getX = () => {
-  return p5nyan.getX();
+  p5nyan.getX();
 };
 
 p5.prototype.setY = (y) => {
@@ -698,11 +698,11 @@ p5.prototype.setY = (y) => {
 };
 
 p5.prototype.getY = () => {
-  return p5nyan.getY();
+  p5nyan.getY();
 };
 
 p5.prototype.keepHorizontal = (flag = true) => {
-  return p5nyan.keepHorizontal(flag);
+  p5nyan.keepHorizontal(flag);
 };
 
 p5.prototype.putFish = (x, y, col) => {

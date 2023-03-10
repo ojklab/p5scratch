@@ -348,7 +348,7 @@ class Sprite {
     }
   }
 
-  walk(steps) {
+  move(steps) {
     if (!isFinite(steps)) return;
     this.x += this.dir.x * steps;
     this.y += this.dir.y * steps;
@@ -442,7 +442,7 @@ class Sprite {
   */
 
   /** 色を変更 */
-  setColor(col = "coral") {
+  changeColor(col = "coral") {
     if (col === "random") {
       col = randomColor(this.col);
     }
@@ -483,7 +483,7 @@ class Sprite {
   }
 
   /** 座標で指定 */
-  setXY(x, y) {
+  goTo(x, y) {
     if (!isFinite(x) || !isFinite(y)) return;
     if (Sprite.withBody) y -= 14;
     const keepState = this.x == x && this.y == y;
@@ -626,13 +626,8 @@ class Sprite {
 
 /** startメソッドで生成したピゴニャンのメソッドを直接呼び出す */
 
-p5.prototype.walk = (steps) => {
-  return p5nyan.walk(steps);
-};
-
-// walkの別名
 p5.prototype.move = (steps) => {
-  return p5nyan.walk(steps);
+  return p5nyan.move(steps);
 };
 
 p5.prototype.say = (serif) => {
@@ -659,26 +654,21 @@ p5.prototype.turnBack = () => {
   p5nyan.turnBack();
 };
 
-p5.prototype.setColor = (col) => {
-  p5nyan.setColor(col);
-};
-
-// setColorの別名
 p5.prototype.changeColor = (col) => {
-  p5nyan.setColor(col);
+  p5nyan.changeColor(col);
 };
 
 p5.prototype.getColor = () => {
   return p5nyan.getColor();
 };
 
-p5.prototype.setXY = (x, y) => {
-  return p5nyan.setXY(x, y);
+p5.prototype.goTo = (x, y) => {
+  return p5nyan.goTo(x, y);
 };
 
-// setXYの別名
-p5.prototype.goTo = (x, y) => {
-  return p5nyan.setXY(x, y);
+// goToの別名
+p5.prototype.setXY = (x, y) => {
+  return p5nyan.goTo(x, y);
 };
 
 p5.prototype.getXY = () => {

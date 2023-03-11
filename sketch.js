@@ -4,7 +4,7 @@
 let fish_list = [];
 const n_fish = 10;
 const time_limit = 20;
-const frame_rate = 8r;
+const frame_rate = 10;
 let say_time = time_limit;
 let score = 0;
 
@@ -14,12 +14,18 @@ function setup() {
   start(100, 200); // ピゴニャンを呼び出す
 
   frameRate(frame_rate); // フレームレート
-  loop(); // drawを再開
+  // loop(); // drawを再開
   // turn("下");
   // turn("右");
 }
 
-function draw() {
+async function draw() {
+  await sleep(1);
+  nextCostume();
+  await sleep(1);
+  nextCostume();
+
+  return;
   const sec = floor(frameCount / frame_rate); // 現在の秒数
 
   // 10匹まで魚を配列に入れておく

@@ -63,7 +63,6 @@ class Sprite {
     this.drawFish();
 
     // 歩き状態を更新
-    console.log(keepState);
     this.state = keepState ? this.state : !this.state;
 
     // ピゴニャン
@@ -440,6 +439,11 @@ class Sprite {
     this.draw(true);
   }
 
+  /** 次のポーズにする */
+  nextCostume() {
+    this.draw();
+  }
+
   /** ツール（ランダムに色を選ぶ） */
   randomColor(cur_col) {
     const list = ["coral", "silver", "skyblue", "gold", "lightgreen", "plum", "lightpink"];
@@ -702,6 +706,10 @@ p5.prototype.moveFish = (step) => {
 
 p5.prototype.randomColor = () => {
   return p5nyan.randomColor(p5nyan.col);
+};
+
+p5.prototype.nextCostume = () => {
+  p5nyan.nextCostume();
 };
 
 /** ピゴニャン用のツール関数 */

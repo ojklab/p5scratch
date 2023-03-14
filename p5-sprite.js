@@ -5,14 +5,9 @@ let p5nyan; // start関数から始めるとき用
 /** ピゴニャンを1体しか使わないときの初期設定（上巻） */
 p5.prototype.start = (x = width / 2, y = height / 2, margin_y = 0, margin_x = 0) => {
   if (p5nyan) return; // 2体はつくらない
-
-  setupSprite();
-
-  // スプライトの生成
-  p5nyan = new Sprite(x, y);
-
-  // ループを止める
-  noLoop();
+  setupSprite(); // 初期設定
+  p5nyan = new Sprite(x, y); // スプライトの生成
+  noLoop(); // ループを止める
 };
 
 /** ピゴニャン用のp5.jsのセットアップ */
@@ -27,12 +22,8 @@ p5.prototype.setupSprite = (x = width / 2, y = height / 2, margin_y = 0, margin_
   }
   document.addEventListener("contextmenu", (e) => e.preventDefault());
 
-  // 描画の装飾
-  background(255);
-  noStroke();
-
-  // その他の設定
-  frameRate(30);
+  background(255); // 描画の装飾
+  frameRate(30); // その他の設定
 };
 
 /** スプライト（ピゴニャン） */

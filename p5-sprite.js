@@ -627,10 +627,14 @@ p5.prototype.say = (serif) => {
 };
 
 p5.prototype.sayFor = async (serif, sec) => {
-  p5nyan.say(serif);
-  p5nyan.draw(true);
-  await sleep(sec);
-  p5nyan.say("");
+  if (!sec) {
+    p5nyan.say(serif);
+  } else {
+    p5nyan.say(serif);
+    p5nyan.draw(true);
+    await sleep(sec);
+    p5nyan.say("");
+  }
 };
 
 p5.prototype.turn = (dir) => {

@@ -628,7 +628,7 @@ p5.prototype.say = (serif) => {
 
 p5.prototype.sayFor = async (serif, sec) => {
   p5nyan.say(serif);
-  p5nyan.draw();
+  p5nyan.draw(true);
   await sleep(sec);
   p5nyan.say("");
 };

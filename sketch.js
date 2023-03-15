@@ -15,6 +15,12 @@ function setup() {
 }
 
 async function draw() {
+  say("aaa");
+  await sleep(1);
+  say(0);
+}
+
+/*
   fill("white");
   putFish(100, 100);
 
@@ -33,9 +39,4 @@ async function draw() {
   line(getX() - 30, getY() - 36, getX() + 30, getY() - 36);
   line(getX() - 30, getY() + 28, getX() + 30, getY() + 28);
   // return;
-
-  while (true) {
-    putFish(random(173, 300), random(120, 240), "random");
-    await sleep(0.1);
-  }
-}
+*/

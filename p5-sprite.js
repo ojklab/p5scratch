@@ -79,7 +79,7 @@ class Sprite {
     pop();
 
     // しゃべる
-    if (this.serif) {
+    if (this.serif != undefined) {
       this.drawMessage();
     }
 
@@ -193,7 +193,7 @@ class Sprite {
     line(x + 31 * d, y + 6, x + 29 * d, y + 6);
     line(x + 31 * d, y + 3, x + 30 * d, y + 3);
     // mouth
-    if (this.serif) {
+    if (this.serif != undefined) {
       fill("crimson");
       noStroke();
       ellipse(x + 14 * d, y + 14, 4, 5);
@@ -306,7 +306,7 @@ class Sprite {
         line(x + 24, y + 6, x + 30, y + 6);
         line(x + 24, y + 3, x + 30, y + 3);
         // mouth
-        if (this.serif) {
+        if (this.serif != undefined) {
           fill("crimson");
           noStroke();
           ellipse(x, y + 15, 4, 5);
@@ -331,7 +331,7 @@ class Sprite {
       line(x + 22, y + 10 * d, x + 28, y + 10 * d);
       line(x + 22, y + 13 * d, x + 28, y + 13 * d);
       // mouth
-      if (this.serif) {
+      if (this.serif != undefined) {
         fill("crimson");
         noStroke();
         ellipse(x, y + 20 * d, 4, 4);
@@ -396,7 +396,6 @@ class Sprite {
 
   /** セリフを設定 */
   say(serif = undefined) {
-    if (serif === 0) this.serif = "0";
     if (serif === "") {
       this.serif = undefined;
     } else {

@@ -592,16 +592,18 @@ class Sprite {
   eatFish() {
     if (!this.fishList) return false;
     let eaten = false;
+    const x = this.x;
+    const y = Sprite.withBody ? this.y + 14 : this.y;
     this.fishList = this.fishList.filter((fish) => {
       const fx = fish.x;
       const fy = fish.y;
       if (Sprite.withBody) {
-        if (fx < this.x + 45 && fx > this.x - 52 && fy < this.y + 48 && fy > this.y - 35) {
+        if (fx < x + 45 && fx > x - 52 && fy < y + 36 && fy > y - 44) {
           eaten = fish;
           return false;
         }
       } else {
-        if (fx < this.x + 45 && fx > this.x - 52 && fy < this.y + 30 && fy > this.y - 35) {
+        if (fx < x + 45 && fx > x - 52 && fy < y + 30 && fy > y - 30) {
           eaten = fish;
           return false;
         }

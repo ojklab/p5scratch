@@ -4,21 +4,13 @@
 function setup() {
   // Sprite.flushScreen = false;
   createCanvas(480, 360); // キャンバスを描画
-  start(240, 180); // ピゴニャンを呼び出す
+  start(240, 180, { col: "skyblue", dir: { x: -1, y: 0 } }); // ピゴニャンを呼び出す
 }
 
 async function draw() {
   await sleep(2);
-  setX(200);
-  await sleep(2);
-  setY(100);
-  await sleep(2);
-  goTo(100, 200);
-  await sleep(2);
-  turn("下");
-  await sleep(2);
-  goTo(200, 100);
-  await sleep(2);
+  goTo(200, 100, true);
+  // setY(80, true);
 }
 
 /*

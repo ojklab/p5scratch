@@ -3,10 +3,10 @@
 let p5nyan; // start関数から始めるとき用
 
 /** ピゴニャンを1体しか使わないときの初期設定（上巻） */
-p5.prototype.start = (x = width / 2, y = height / 2, margin_y = 0, margin_x = 0) => {
-  if (p5nyan) return; // 2体はつくらない
+p5.prototype.start = (x = width / 2, y = height / 2, param = {}) => {
+  if (p5nyan) return; // start関数で2体目はつくらない
   setupSprite(); // 初期設定
-  p5nyan = new Sprite(x, y); // スプライトの生成
+  p5nyan = new Sprite(x, y, param); // スプライトの生成
   noLoop(); // ループを止める
 };
 
@@ -31,11 +31,11 @@ class Sprite {
   static flushScreen = true;
   static withBody = true;
 
-  constructor(x, y) {
+  constructor(x, y, param = {}) {
     this.x = x;
     this.y = Sprite.withBody ? y - 14 : y;
-    this.dir = { x: 1, y: 0 };
-    this.col = "coral";
+    this.dir = param.dir || { x: 1, y: 0 };
+    this.col = param.col || "coral";
     this.dcol = this.getDarkColor(this.col);
     this.pcol = this.getPaleColor(this.col);
     this.state = false;
@@ -467,26 +467,26 @@ class Sprite {
   }
 
   /** 座標で指定 */
-  goTo(x, y) {
+  goTo(x, y, withTurn = false) {
     if (!isFinite(x) || !isFinite(y)) return;
     if (Sprite.withBody) y -= 14;
-    /*
-    const keepState = this.x == x && this.y == y;
-
-    if (this.keepH || abs(this.x - x) >= abs(this.y - y)) {
-      this.dir.x = x >= this.x ? 1 : -1;
-      this.dir.y = 0;
+    if (withTurn) {
+      const keepState = this.x == x && this.y == y;
+      if (this.keepH || abs(this.x - x) >= abs(this.y - y)) {
+        this.dir.x = x >= this.x ? 1 : -1;
+        this.dir.y = 0;
+      } else {
+        this.dir.y = y >= this.y ? 1 : -1;
+        this.dir.x = 0;
+      }
+      this.x = x;
+      this.y = y;
+      return this.draw(keepState);
     } else {
-      this.dir.y = y >= this.y ? 1 : -1;
-      this.dir.x = 0;
+      this.x = x;
+      this.y = y;
+      return this.draw();
     }
-    this.x = x;
-    this.y = y;
-    return this.draw(keepState);
-    */
-    this.x = x;
-    this.y = y;
-    return this.draw();
   }
 
   getXY() {
@@ -494,39 +494,37 @@ class Sprite {
     return [this.x, y];
   }
 
-  setX(x) {
+  setX(x, withTurn = false) {
     if (!isFinite(x)) return;
-    /*
-    const keepState = this.x == x;
-    if (this.dir.y) {
-      this.dir.y = 0;
+    if (withTurn) {
+      const keepState = this.x == x;
+      if (this.dir.y) this.dir.y = 0;
+      this.dir.x = x >= this.x ? 1 : -1;
+      this.x = x;
+      return this.draw(keepState);
+    } else {
+      this.x = x;
+      return this.draw();
     }
-    this.dir.x = x >= this.x ? 1 : -1;
-    this.x = x;
-    return this.draw(keepState);
-    */
-    this.x = x;
-    return this.draw();
   }
 
   getX() {
     return this.x;
   }
 
-  setY(y) {
+  setY(y, withTurn = false) {
     if (!isFinite(y)) return;
     if (Sprite.withBody) y -= 14;
-    /*
-    const keepState = this.y == y;
-    if (this.dir.x) {
-      this.dir.x = 0;
+    if (withTurn) {
+      const keepState = this.y == y;
+      if (this.dir.x) this.dir.x = 0;
+      this.dir.y = y >= this.y ? 1 : -1;
+      this.y = y;
+      return this.draw(keepState);
+    } else {
+      this.y = y;
+      return this.draw();
     }
-    this.dir.y = y >= this.y ? 1 : -1;
-    this.y = y;
-    return this.draw(keepState);
-    */
-    this.y = y;
-    return this.draw();
   }
 
   getY() {
@@ -672,29 +670,29 @@ p5.prototype.getColor = () => {
   return p5nyan.getColor();
 };
 
-p5.prototype.goTo = (x, y) => {
-  return p5nyan.goTo(x, y);
+p5.prototype.goTo = (x, y, withTurn) => {
+  return p5nyan.goTo(x, y, withTurn);
 };
 
 // goToの別名
-p5.prototype.setXY = (x, y) => {
-  return p5nyan.goTo(x, y);
+p5.prototype.setXY = (x, y, withTurn) => {
+  return p5nyan.goTo(x, y, withTurn);
 };
 
 p5.prototype.getXY = () => {
   return p5nyan.getXY();
 };
 
-p5.prototype.setX = (x) => {
-  return p5nyan.setX(x);
+p5.prototype.setX = (x, withTurn) => {
+  return p5nyan.setX(x, withTurn);
 };
 
 p5.prototype.getX = () => {
   return p5nyan.getX();
 };
 
-p5.prototype.setY = (y) => {
-  return p5nyan.setY(y);
+p5.prototype.setY = (y, withTurn) => {
+  return p5nyan.setY(y, withTurn);
 };
 
 p5.prototype.getY = () => {

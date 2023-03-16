@@ -467,7 +467,7 @@ class Sprite {
   }
 
   /** 座標で指定 */
-  goTo(x, y, withTurn = false) {
+  goTo(x, y, withTurn = true) {
     if (!isFinite(x) || !isFinite(y)) return;
     if (Sprite.withBody) y -= 14;
     if (withTurn) {
@@ -494,7 +494,7 @@ class Sprite {
     return [this.x, y];
   }
 
-  setX(x, withTurn = false) {
+  setX(x, withTurn = true) {
     if (!isFinite(x)) return;
     if (withTurn) {
       const keepState = this.x == x;
@@ -512,7 +512,7 @@ class Sprite {
     return this.x;
   }
 
-  setY(y, withTurn = false) {
+  setY(y, withTurn = true) {
     if (!isFinite(y)) return;
     if (Sprite.withBody) y -= 14;
     if (withTurn) {

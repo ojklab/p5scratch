@@ -470,6 +470,7 @@ class Sprite {
   goTo(x, y) {
     if (!isFinite(x) || !isFinite(y)) return;
     if (Sprite.withBody) y -= 14;
+    /*
     const keepState = this.x == x && this.y == y;
 
     if (this.keepH || abs(this.x - x) >= abs(this.y - y)) {
@@ -482,6 +483,10 @@ class Sprite {
     this.x = x;
     this.y = y;
     return this.draw(keepState);
+    */
+    this.x = x;
+    this.y = y;
+    return this.draw();
   }
 
   getXY() {
@@ -491,6 +496,7 @@ class Sprite {
 
   setX(x) {
     if (!isFinite(x)) return;
+    /*
     const keepState = this.x == x;
     if (this.dir.y) {
       this.dir.y = 0;
@@ -498,6 +504,9 @@ class Sprite {
     this.dir.x = x >= this.x ? 1 : -1;
     this.x = x;
     return this.draw(keepState);
+    */
+    this.x = x;
+    return this.draw();
   }
 
   getX() {
@@ -507,6 +516,7 @@ class Sprite {
   setY(y) {
     if (!isFinite(y)) return;
     if (Sprite.withBody) y -= 14;
+    /*
     const keepState = this.y == y;
     if (this.dir.x) {
       this.dir.x = 0;
@@ -514,6 +524,9 @@ class Sprite {
     this.dir.y = y >= this.y ? 1 : -1;
     this.y = y;
     return this.draw(keepState);
+    */
+    this.y = y;
+    return this.draw();
   }
 
   getY() {

@@ -1,13 +1,6 @@
 /* jshint esversion: 8 */
 // noprotect
 
-let fish_list = [];
-const n_fish = 10;
-const time_limit = 20;
-const frame_rate = 10;
-let say_time = time_limit;
-let score = 0;
-
 function setup() {
   // Sprite.flushScreen = false;
   createCanvas(480, 360); // キャンバスを描画
@@ -15,9 +8,17 @@ function setup() {
 }
 
 async function draw() {
-  say("aaa");
-  await sleep(1);
-  say(0);
+  await sleep(2);
+  setX(200);
+  await sleep(2);
+  setY(100);
+  await sleep(2);
+  goTo(100, 200);
+  await sleep(2);
+  turn("下");
+  await sleep(2);
+  goTo(200, 100);
+  await sleep(2);
 }
 
 /*

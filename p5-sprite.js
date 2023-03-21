@@ -394,6 +394,22 @@ class Sprite {
     }
   }
 
+  /** 方法を取得 */
+  getDirection() {
+    if (this.dir.x == 1) {
+      return "右";
+    }
+    if (this.dir.x == -1) {
+      return "左";
+    }
+    if (this.dir.y == 1) {
+      return "下";
+    }
+    if (this.dir.y == -1) {
+      return "上";
+    }
+  }
+
   /** セリフを設定 */
   say(serif = undefined) {
     if (serif === "") {
@@ -660,6 +676,10 @@ p5.prototype.pointInDirection = (dir) => {
 
 p5.prototype.turnBack = () => {
   p5nyan.turnBack();
+};
+
+p5.prototype.getDirection = () => {
+  p5nyan.getDirection();
 };
 
 p5.prototype.changeColor = (col) => {

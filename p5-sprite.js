@@ -372,7 +372,7 @@ class Sprite {
         this.dir.y = 0;
         break;
       default:
-        console.error("方向は上/下/左/右で指定してください");
+        console.error("方向は 上/下/左/右 か 0/90/180/270 で指定してください");
         noLoop();
         break;
     }

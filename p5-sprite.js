@@ -731,9 +731,11 @@ p5.prototype.moveFish = (step) => {
   return p5nyan.moveFish(step);
 };
 
+/*
 p5.prototype.randomColor = () => {
   return p5nyan.randomColor(p5nyan.col);
 };
+*/
 
 p5.prototype.nextCostume = () => {
   p5nyan.nextCostume();

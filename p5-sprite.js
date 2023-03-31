@@ -437,7 +437,7 @@ class Sprite {
   /** 色を変える */
   changeColor(col = "coral") {
     if (col === "random") {
-      col = randomColor(this.col);
+      col = this.randomColor(this.col);
     }
     this.col = col;
     this.dcol = this.getDarkColor(col);
@@ -559,7 +559,7 @@ class Sprite {
   putFish(x, y, col = "skyblue") {
     if (!isFinite(x) || !isFinite(y)) return;
     if (col === "random") {
-      col = randomColor(this.col);
+      col = this.randomColor(this.col);
     }
     let sameFish = undefined;
     for (let i = 0; i < this.fishList.length; i++) {

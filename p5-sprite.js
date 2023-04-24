@@ -41,7 +41,7 @@ class Sprite {
     this.state = false;
     this.keepH = false;
     this.fishList = [];
-    this.serif = undefined;
+    this.msg = undefined;
     this.draw();
   }
 
@@ -79,7 +79,7 @@ class Sprite {
     pop();
 
     // しゃべる
-    if (this.serif != undefined) {
+    if (this.msg != undefined) {
       this.drawMessage();
     }
 
@@ -193,7 +193,7 @@ class Sprite {
     line(x + 31 * d, y + 6, x + 29 * d, y + 6);
     line(x + 31 * d, y + 3, x + 30 * d, y + 3);
     // mouth
-    if (this.serif != undefined) {
+    if (this.msg != undefined) {
       fill("crimson");
       noStroke();
       ellipse(x + 14 * d, y + 14, 4, 5);
@@ -306,7 +306,7 @@ class Sprite {
         line(x + 24, y + 6, x + 30, y + 6);
         line(x + 24, y + 3, x + 30, y + 3);
         // mouth
-        if (this.serif != undefined) {
+        if (this.msg != undefined) {
           fill("crimson");
           noStroke();
           ellipse(x, y + 15, 4, 5);
@@ -331,7 +331,7 @@ class Sprite {
       line(x + 22, y + 10 * d, x + 28, y + 10 * d);
       line(x + 22, y + 13 * d, x + 28, y + 13 * d);
       // mouth
-      if (this.serif != undefined) {
+      if (this.msg != undefined) {
         fill("crimson");
         noStroke();
         ellipse(x, y + 20 * d, 4, 4);
@@ -411,11 +411,11 @@ class Sprite {
   }
 
   /** セリフを設定 */
-  say(serif = undefined) {
-    if (serif === "") {
-      this.serif = undefined;
+  say(msg = undefined) {
+    if (msg === "") {
+      this.msg = undefined;
     } else {
-      this.serif = serif;
+      this.msg = msg;
     }
     this.draw(true);
   }
@@ -427,9 +427,9 @@ class Sprite {
     fill(0);
     noStroke();
     if (this.dir.x) {
-      text(this.serif, this.x + 2 * this.dir.x, this.y - 42);
+      text(this.msg, this.x + 2 * this.dir.x, this.y - 42);
     } else {
-      text(this.serif, this.x, this.y - 42);
+      text(this.msg, this.x, this.y - 42);
     }
     pop();
   }
@@ -650,15 +650,15 @@ p5.prototype.move = (steps) => {
   return p5nyan.move(steps);
 };
 
-p5.prototype.say = (serif) => {
-  p5nyan.say(serif);
+p5.prototype.say = (msg) => {
+  p5nyan.say(msg);
 };
 
-p5.prototype.sayFor = async (serif, sec) => {
+p5.prototype.sayFor = async (msg, sec) => {
   if (!sec) {
-    p5nyan.say(serif);
+    p5nyan.say(msg);
   } else {
-    p5nyan.say(serif);
+    p5nyan.say(msg);
     p5nyan.draw(true);
     await sleep(sec);
     p5nyan.say("");

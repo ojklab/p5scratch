@@ -2,15 +2,25 @@
 // noprotect
 
 function setup() {
-  // Sprite.flushScreen = false;
+  Sprite.flushScreen = false;
   createCanvas(480, 360); // キャンバスを描画
-  start(240, 180, { col: "skyblue", dir: { x: -1, y: 0 } }); // ピゴニャンを呼び出す
+  // start(240, 180, { col: "skyblue", dir: { x: -1, y: 0 } }); // ピゴニャンを呼び出す
+  start(100, 200);
 }
 
 async function draw() {
-  await sleep(2);
-  goTo(200, 100, true);
-  // setY(80, true);
+  await sleep(1);
+
+  for (let i = 0; i < 10; i += 1) {
+    move(75);
+    // turn(random(["上", "下", "右", "左"]));
+    if (i % 2 == 0) {
+      say("エッ");
+    } else {
+      say("ホッ");
+    }
+    await sleep(0.5);
+  }
 }
 
 /*

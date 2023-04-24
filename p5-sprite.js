@@ -46,7 +46,7 @@ class Sprite {
   }
 
   /** 描画（ピゴニャンと魚） */
-  draw(keepState = false) {
+  draw(keepState = false, noSpeak = false) {
     if (Sprite.flushScreen) background(255);
 
     // 魚
@@ -79,7 +79,7 @@ class Sprite {
     pop();
 
     // しゃべる
-    if (this.msg != undefined) {
+    if (!noSpeak && this.msg != undefined) {
       this.drawMessage();
     }
 
@@ -344,7 +344,11 @@ class Sprite {
     if (!isFinite(steps)) return;
     this.x += this.dir.x * steps;
     this.y += this.dir.y * steps;
-    return this.draw();
+    if (Sprite.flushScreen) {
+      return this.draw();
+    } else {
+      return this.draw(false, true);
+    }
   }
 
   /** 〜に向ける */
@@ -486,6 +490,7 @@ class Sprite {
   goTo(x, y, withTurn = true) {
     if (!isFinite(x) || !isFinite(y)) return;
     if (Sprite.withBody) y -= 14;
+    // 移動時に方向転換する（通常）
     if (withTurn) {
       const keepState = this.x == x && this.y == y;
       if (this.keepH || abs(this.x - x) >= abs(this.y - y)) {
@@ -497,11 +502,19 @@ class Sprite {
       }
       this.x = x;
       this.y = y;
-      return this.draw(keepState);
+      if (Sprite.flushScreen) {
+        return this.draw(keepState);
+      } else {
+        return this.draw(keepState, true);
+      }
     } else {
       this.x = x;
       this.y = y;
-      return this.draw();
+      if (Sprite.flushScreen) {
+        return this.draw();
+      } else {
+        return this.draw(false, true);
+      }
     }
   }
 
@@ -517,10 +530,18 @@ class Sprite {
       if (this.dir.y) this.dir.y = 0;
       this.dir.x = x >= this.x ? 1 : -1;
       this.x = x;
-      return this.draw(keepState);
+      if (Sprite.flushScreen) {
+        return this.draw(keepState);
+      } else {
+        return this.draw(keepState, true);
+      }
     } else {
       this.x = x;
-      return this.draw();
+      if (Sprite.flushScreen) {
+        return this.draw();
+      } else {
+        return this.draw(false, true);
+      }
     }
   }
 
@@ -536,10 +557,18 @@ class Sprite {
       if (this.dir.x) this.dir.x = 0;
       this.dir.y = y >= this.y ? 1 : -1;
       this.y = y;
-      return this.draw(keepState);
+      if (Sprite.flushScreen) {
+        return this.draw(keepState);
+      } else {
+        return this.draw(keepState, true);
+      }
     } else {
       this.y = y;
-      return this.draw();
+      if (Sprite.flushScreen) {
+        return this.draw();
+      } else {
+        return this.draw(false, true);
+      }
     }
   }
 

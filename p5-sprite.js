@@ -20,7 +20,7 @@ p5.prototype.setupSprite = (x = width / 2, y = height / 2, margin_y = 0, margin_
   if (margin_y) {
     document.querySelector("canvas").style.marginTop = margin_y + "px";
   }
-  document.addEventListener("contextmenu", (e) => e.preventDefault());
+  // document.addEventListener("contextmenu", (e) => e.preventDefault());
 
   background(255); // 描画の装飾
   frameRate(30); // その他の設定
